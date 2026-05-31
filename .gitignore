@@ -1,0 +1,33 @@
+# archivos del sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# carpetas de editores e IDEs
+.vscode/
+.idea/
+*.sublime-*
+
+# archivos temporales de Office mientras tenes el archivo abierto
+~$*
+*.tmp
+*.bak
+
+# logs y errores de PHP en local
+error_log
+debug.log
+*.log
+
+# por si en algun avance instalamos composer
+vendor/
+
+# por si en algun avance usamos npm
+node_modules/
+package-lock.json
+
+# carpetas de fuentes SCSS que no se necesitan en produccion (opcional dejar)
+# assets/scss/
+
+# archivos de configuracion local con datos sensibles (para el avance 2)
+config/local.php
+.env
