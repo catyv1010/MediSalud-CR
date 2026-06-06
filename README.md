@@ -18,7 +18,7 @@ Grupo 8
 
 1. Tener XAMPP instalado con Apache encendido.
 2. Copiar la carpeta del proyecto dentro de `C:\xampp\htdocs\`.
-3. En el navegador entrar a `http://localhost/MediSalud/` (o con el puerto que XAMPP esté usando).
+3. En el navegador entrar a `http://localhost/MediSalud-CR/` (o con el puerto que XAMPP esté usando).
 4. Debería aparecer la pantalla de inicio.
 
 ## Datos para probar el login
@@ -33,26 +33,40 @@ Mientras no haya base, en el login se puede entrar con:
 ## Estructura de carpetas
 
 ```
-MediSalud/
-  index.php              pantalla de inicio
-  login.php              iniciar sesion
-  registro.php           registro de pacientes
-  recuperar.php          recuperar contrasena
-  about.php              acerca de la clinica
-  doctor.php             listado de medicos
-  department.php         listado de especialidades
+MediSalud-CR/
+  index.php                    punto de entrada: redirige a la vista principal
 
-  view/_partials/
-    header.php           cabecera comun
-    footer.php           pie comun
+  view/
+    LayoutExterno.php          layout de vistas publicas (ImportCSS, PintarHeader, PintarFooter, ImportJS)
+    LayoutInterno.php          layout de vistas con sesion iniciada (se completa en avance 2)
+    vInicio/                   modulo de inicio
+      Principal.php            pantalla de inicio
+      IniciarSesion.php        iniciar sesion
+      RegistrarUsuarios.php    registro de pacientes
+      RecuperarAcceso.php      recuperar contrasena
+      AcercaDe.php             acerca de la clinica
+      Medicos.php              listado de medicos
+      Especialidades.php       listado de especialidades
 
-  control/               aqui van los controladores (avance 2)
-  model/                 aqui van los modelos (avance 2)
+  control/
+    InicioController.php       controlador unico del modulo de inicio
+                               (cada form se identifica por el name del boton:
+                               btnLogin, btnRegistrar, btnRecuperar)
 
-  assets/                css, js, imagenes y fuentes de la plantilla
+  model/                       logica de datos (se agrega en avance 2 con MySQL)
+
+  assets/                      css, js, imagenes y fuentes de la plantilla
+    js/medisalud.js            javascript propio (jQuery): validacion bootstrap
+                               y chequeo de contrasenas en el registro
 
   README.md
 ```
+
+Reglas del estandar (igual al repo del profe):
+
+- La vista nunca habla con el modelo: todo pasa por el controlador.
+- Lo repetido (head, menu, footer, scripts) vive una sola vez en los layouts.
+- Una vista incluye LayoutExterno.php O LayoutInterno.php, nunca los dos.
 
 ## Lo que tiene esta entrega (Practica 1)
 
