@@ -1,14 +1,6 @@
 <?php
-// =====================================================================
-// LayoutInterno.php
-// Layout para las vistas con sesion iniciada (panel del paciente,
-// panel del administrador, gestion de citas, etc.).
-// Se completa en el Avance 2, cuando exista inicio de sesion real:
-// aqui ira el menu del usuario logueado (nombre, cerrar sesion, etc.).
-//
-// IMPORTANTE: una vista incluye LayoutExterno.php O LayoutInterno.php,
-// nunca los dos, porque las funciones se llaman igual.
-// =====================================================================
+// layout de las vistas con sesion iniciada, se completa en el avance 2
+// ojo: una vista incluye este o el externo, no los dos (las funciones se llaman igual)
 
 function ImportCSS($titulo = 'MediSalud CR')
 {
@@ -30,7 +22,7 @@ function ImportCSS($titulo = 'MediSalud CR')
 
 function PintarHeader()
 {
-    // TODO (Avance 2): menu del usuario con sesion iniciada
+    // aqui va el menu del usuario logueado, lo armamos en el avance 2
     echo '
 <header>
     <div class="header-area">

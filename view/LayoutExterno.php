@@ -1,13 +1,8 @@
 <?php
-// =====================================================================
-// LayoutExterno.php
-// Layout para las vistas publicas (sin sesion iniciada):
-// Principal, IniciarSesion, RegistrarUsuarios, RecuperarAcceso, etc.
-// Todo lo que se repite entre vistas vive aqui, una sola vez.
-// Las rutas son relativas a view/vInicio/ (dos niveles bajo la raiz).
-// =====================================================================
+// layout de las vistas publicas, aqui va todo lo que se repite
+// las rutas son relativas a view/vInicio
 
-// imprime el doctype, el <head> con todos los CSS y abre el <body>
+// head con los css, abre el body
 function ImportCSS($titulo = 'MediSalud CR')
 {
     echo '<!DOCTYPE html>
@@ -39,7 +34,7 @@ function ImportCSS($titulo = 'MediSalud CR')
 ';
 }
 
-// imprime el menu de navegacion superior
+// menu de arriba
 function PintarHeader()
 {
     echo '
@@ -84,7 +79,7 @@ function PintarHeader()
 ';
 }
 
-// imprime el pie de pagina
+// pie de pagina
 function PintarFooter()
 {
     echo '
@@ -128,7 +123,7 @@ function PintarFooter()
 ';
 }
 
-// imprime los scripts JS y cierra el <body> y el <html>
+// scripts y cierre del html
 function ImportJS()
 {
     echo '
