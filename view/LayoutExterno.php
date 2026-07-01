@@ -29,6 +29,7 @@ function ImportCSS($titulo = 'MediSalud CR')
     <link rel="stylesheet" href="../../assets/css/slick.css">
     <link rel="stylesheet" href="../../assets/css/nice-select.css">
     <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/medisalud.css">
 </head>
 <body>
 ';
@@ -139,10 +140,21 @@ function ImportJS()
 <script src="../../assets/js/wow.min.js"></script>
 <script src="../../assets/js/animated.headline.js"></script>
 <script src="../../assets/js/jquery.nice-select.min.js"></script>
-<script src="../../assets/js/main.js"></script>
+<script src="../../assets/js/plantilla.js"></script>
 <script src="../../assets/js/medisalud.js"></script>
 
 </body>
 </html>
 ';
+}
+
+// pinta un mensaje de exito o error si viene en la URL (?msj=...&tipo=ok|error)
+function PintarMensaje()
+{
+    if (isset($_GET['msj']) && $_GET['msj'] !== '') {
+        $tipo  = (isset($_GET['tipo']) && $_GET['tipo'] === 'ok') ? 'success' : 'danger';
+        echo '<div class="alert alert-' . $tipo . ' text-center" role="alert">'
+           . htmlspecialchars($_GET['msj'])
+           . '</div>';
+    }
 }

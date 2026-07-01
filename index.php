@@ -7,5 +7,5 @@
 // Maria Catalina Valverde Arroyo
 
 // punto de entrada: solo redirige a la vista principal
-header("Location: view/vInicio/Principal.php");
+header("Location: View/vInicio/Principal.php");
 exit();

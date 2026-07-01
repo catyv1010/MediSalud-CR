@@ -30,7 +30,9 @@ PintarHeader();
                             las instrucciones para restablecer su contraseña.
                         </p>
 
-                        <form action="../../control/InicioController.php" method="POST" id="form-recuperar" class="needs-validation" novalidate>
+                        <?php PintarMensaje(); ?>
+
+                        <form action="../../Controller/InicioController.php" method="POST" id="form-recuperar" class="needs-validation" novalidate>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
@@ -40,7 +42,7 @@ PintarHeader();
                                 </div>
                             </div>
                             <div class="form-group mt-4 text-center">
-                                <button type="submit" name="btnRecuperar" style="width:100%; background:#244cb6; color:#ffffff; border:none; padding:14px 20px; border-radius:6px; font-size:16px; font-weight:bold; cursor:pointer; transition:background 0.2s;" onmouseover="this.style.background='#1a3a8c'" onmouseout="this.style.background='#244cb6'">Enviar enlace de recuperación</button>
+                                <button type="submit" name="btnRecuperar" class="btn-medisalud">Enviar enlace de recuperación</button>
                             </div>
                             <div class="text-center mt-4">
                                 <p>

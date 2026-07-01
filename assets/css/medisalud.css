@@ -1,0 +1,213 @@
+/* estilos propios del proyecto - MediSalud CR */
+
+/* contraste de textos */
+
+/* la plantilla trae parrafos en gris muy claro; se oscurecen para que se lean */
+body,
+p,
+li,
+td,
+th,
+label,
+.form-group label {
+    color: #3d4451;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #1f2c4d;
+}
+
+/* placeholders visibles pero sin competir con el texto real */
+.form-control::placeholder {
+    color: #8d94a3;
+    opacity: 1;
+}
+
+/* enlaces del cuerpo con azul del proyecto */
+main a {
+    color: #244cb6;
+}
+
+/* el footer es oscuro: ahi el texto va claro */
+footer p,
+footer li,
+footer a {
+    color: #dfe7f5;
+}
+
+footer h4 {
+    color: #ffffff;
+}
+
+/* boton principal */
+
+.btn-medisalud {
+    width: 100%;
+    background: #244cb6;
+    color: #ffffff;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-medisalud:hover,
+.btn-medisalud:focus {
+    background: #1a3a8c;
+    color: #ffffff;
+}
+
+.btn-medisalud:disabled {
+    background: #9fb0d9;
+    cursor: not-allowed;
+}
+
+/* variante secundaria (acciones menores en tablas) */
+.btn-medisalud-sec {
+    background: #ffffff;
+    color: #244cb6;
+    border: 1px solid #244cb6;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-medisalud-sec:hover {
+    background: #244cb6;
+    color: #ffffff;
+}
+
+/* zona interna (con sesion iniciada) */
+
+.panel-fondo {
+    background: #f4f7fc;
+    min-height: 70vh;
+    padding: 50px 0;
+}
+
+.tarjeta-panel {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    margin-bottom: 24px;
+}
+
+.tarjeta-contador {
+    background: #ffffff;
+    border-left: 5px solid #244cb6;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    padding: 22px;
+    margin-bottom: 24px;
+}
+
+.tarjeta-contador .numero {
+    font-size: 34px;
+    font-weight: bold;
+    color: #244cb6;
+    margin: 0;
+}
+
+.tarjeta-contador .etiqueta {
+    color: #5a6272;
+    margin: 0;
+}
+
+/* barra de navegacion interna */
+.nav-interna {
+    background: #244cb6;
+    padding: 10px 0;
+}
+
+.nav-interna a {
+    color: #ffffff;
+    margin-right: 22px;
+    font-weight: 500;
+}
+
+.nav-interna a:hover {
+    color: #cfe0ff;
+    text-decoration: none;
+}
+
+.usuario-sesion {
+    color: #ffffff;
+}
+
+.usuario-sesion .rol {
+    background: #1a3a8c;
+    border-radius: 12px;
+    padding: 3px 12px;
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+/* calendario mensual */
+
+.calendario th {
+    background: #eef3fd;
+    color: #1f2c4d;
+    text-align: center;
+    width: 14.28%;
+}
+
+.calendario td {
+    vertical-align: top;
+    height: 95px;
+    border: 1px solid #dfe5f0;
+    padding: 4px;
+}
+
+.calendario .dia-vacio {
+    background: #f7f9fd;
+}
+
+.calendario .dia-hoy {
+    background: #fff8e1;
+}
+
+.calendario .numero-dia {
+    font-weight: bold;
+    color: #1f2c4d;
+    margin-bottom: 3px;
+}
+
+.cita-cal {
+    border-radius: 4px;
+    padding: 2px 5px;
+    font-size: 11px;
+    line-height: 1.25;
+    margin-bottom: 3px;
+}
+
+/* tabla de citas */
+
+.tabla-citas th {
+    background: #eef3fd;
+    color: #1f2c4d;
+    white-space: nowrap;
+}
+
+.tabla-citas td {
+    vertical-align: middle;
+}
+
+/* estados de la cita */
+.badge-estado {
+    border-radius: 12px;
+    padding: 5px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.estado-agendada   { background: #e3ecff; color: #1a3a8c; }
+.estado-atendida   { background: #e2f6e6; color: #1e7534; }
+.estado-cancelada  { background: #fdeaea; color: #b02a2a; }
+.estado-no-asistio { background: #f2f2f2; color: #5a6272; }

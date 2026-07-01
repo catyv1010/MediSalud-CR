@@ -31,3 +31,6 @@ package-lock.json
 # archivos de configuracion local con datos sensibles (para el avance 2)
 config/local.php
 .env
+
+# avance 2
+Model/correos.log

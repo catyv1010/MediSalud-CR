@@ -27,7 +27,9 @@ PintarHeader();
                         <h3 class="text-center mb-30" style="color:#244cb6;">Registro de paciente</h3>
                         <p class="text-center mb-40" style="color:#666;">Complete los siguientes datos para crear su cuenta</p>
 
-                        <form action="../../control/InicioController.php" method="POST" id="form-registro" class="needs-validation" novalidate>
+                        <?php PintarMensaje(); ?>
+
+                        <form action="../../Controller/InicioController.php" method="POST" id="form-registro" class="needs-validation" novalidate>
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
@@ -90,7 +92,7 @@ PintarHeader();
                                 </div>
                             </div>
                             <div class="form-group mt-4 text-center">
-                                <button type="submit" name="btnRegistrar" style="width:100%; background:#244cb6; color:#ffffff; border:none; padding:14px 20px; border-radius:6px; font-size:16px; font-weight:bold; cursor:pointer; transition:background 0.2s;" onmouseover="this.style.background='#1a3a8c'" onmouseout="this.style.background='#244cb6'">Crear cuenta</button>
+                                <button type="submit" name="btnRegistrar" class="btn-medisalud">Crear cuenta</button>
                             </div>
                             <div class="text-center mt-4">
                                 <p>¿Ya tiene una cuenta? <a href="IniciarSesion.php" style="color:#244cb6; font-weight:bold;">Inicie sesión</a></p>
