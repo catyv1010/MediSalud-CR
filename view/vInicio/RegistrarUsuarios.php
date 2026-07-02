@@ -29,7 +29,7 @@ PintarHeader();
 
                         <?php PintarMensaje(); ?>
 
-                        <form action="../../Controller/InicioController.php" method="POST" id="form-registro" class="needs-validation" novalidate>
+                        <form action="../../Controller/InicioController.php" method="POST" id="form-registro">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
@@ -108,5 +108,5 @@ PintarHeader();
 
 <?php
 PintarFooter();
-ImportJS();
+ImportJS(array('../../assets/js/registrarusuarios.js'));
 ?>

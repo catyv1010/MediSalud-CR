@@ -90,19 +90,6 @@ CREATE TABLE citas (
     ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
--- tokens para recuperar la contrasena por correo (avance 2)
--- el token viaja en el enlace del correo, vence y se usa una sola vez
-CREATE TABLE tokens_recuperacion (
-  id         INT AUTO_INCREMENT PRIMARY KEY,
-  usuario_id INT          NOT NULL,
-  token      VARCHAR(64)  NOT NULL UNIQUE,
-  expira     DATETIME     NOT NULL,
-  usado      BOOLEAN      NOT NULL DEFAULT FALSE,
-  creado     DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
-    ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB;
-
 -- bitacora de errores del sistema (mismo esquema que vimos en clase)
 CREATE TABLE errores (
   id         INT AUTO_INCREMENT PRIMARY KEY,
@@ -221,8 +208,9 @@ BEGIN
 END //
 
 
--- busca el usuario activo por correo (para la recuperacion)
-CREATE PROCEDURE sp_obtener_usuario_por_correo(
+-- valida que el correo exista y este activo (para la recuperacion)
+-- devuelve los datos del usuario, incluido el id para actualizarle la contrasena
+CREATE PROCEDURE sp_validar_correo(
   IN p_correo VARCHAR(150)
 )
 BEGIN
@@ -233,57 +221,14 @@ BEGIN
 END //
 
 
--- guarda un token de recuperacion y anula los anteriores del usuario
-CREATE PROCEDURE sp_guardar_token(
+-- le pone al usuario la contrasena temporal que se le envia por correo
+CREATE PROCEDURE sp_actualizar_contrasena(
   IN p_usuario_id INT,
-  IN p_token      VARCHAR(64),
-  IN p_minutos    INT
-)
-BEGIN
-  UPDATE tokens_recuperacion SET usado = TRUE WHERE usuario_id = p_usuario_id;
-
-  INSERT INTO tokens_recuperacion (usuario_id, token, expira)
-  VALUES (p_usuario_id, p_token, DATE_ADD(NOW(), INTERVAL p_minutos MINUTE));
-
-  SELECT 'OK' AS resultado;
-END //
-
-
--- revisa que el token exista, no este usado y no haya vencido
-CREATE PROCEDURE sp_validar_token(
-  IN p_token VARCHAR(64)
-)
-BEGIN
-  SELECT t.usuario_id, u.nombre, u.correo
-  FROM tokens_recuperacion t
-  INNER JOIN usuarios u ON t.usuario_id = u.id
-  WHERE t.token  = p_token
-    AND t.usado  = FALSE
-    AND t.expira > NOW()
-    AND u.activo = TRUE;
-END //
-
-
--- cambia la contrasena usando un token valido y lo marca como usado
-CREATE PROCEDURE sp_restablecer_contrasena(
-  IN p_token      VARCHAR(64),
   IN p_contrasena VARCHAR(20)
 )
 BEGIN
-  DECLARE v_usuario_id INT DEFAULT NULL;
-
-  SELECT usuario_id INTO v_usuario_id
-  FROM tokens_recuperacion
-  WHERE token = p_token AND usado = FALSE AND expira > NOW()
-  LIMIT 1;
-
-  IF v_usuario_id IS NULL THEN
-    SELECT 'INVALIDO' AS resultado;
-  ELSE
-    UPDATE usuarios SET contrasena = p_contrasena WHERE id = v_usuario_id;
-    UPDATE tokens_recuperacion SET usado = TRUE WHERE token = p_token;
-    SELECT 'OK' AS resultado;
-  END IF;
+  UPDATE usuarios SET contrasena = p_contrasena WHERE id = p_usuario_id;
+  SELECT 'OK' AS resultado;
 END //
 
 

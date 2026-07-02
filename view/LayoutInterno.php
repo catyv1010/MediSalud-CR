@@ -84,14 +84,23 @@ function PintarFooter()
 }
 
 // scripts y cierre del html (todo js va en archivos externos)
-function ImportJS()
+// $extras: javascripts propios de la vista (ej. las validaciones de su formulario)
+function ImportJS($extras = array())
 {
     echo '
 <script src="../../assets/js/vendor/jquery-1.12.4.min.js"></script>
 <script src="../../assets/js/popper.min.js"></script>
 <script src="../../assets/js/bootstrap.min.js"></script>
-<script src="../../assets/js/medisalud.js"></script>
+<script src="../../assets/js/jquery.validate.min.js"></script>
 <script src="../../assets/js/citas.js"></script>
+';
+
+    foreach ($extras as $script) {
+        echo '<script src="' . $script . '"></script>
+';
+    }
+
+    echo '
 </body>
 </html>
 ';

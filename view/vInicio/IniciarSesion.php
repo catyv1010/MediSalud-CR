@@ -31,18 +31,18 @@ PintarHeader();
 
                         <?php PintarMensaje(); ?>
 
-                        <form action="../../Controller/InicioController.php" method="POST" id="form-login" class="needs-validation" novalidate>
+                        <form action="../../Controller/InicioController.php" method="POST" id="form-login">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="cedula">Usuario o cédula <span style="color:#c00;">*</span></label>
-                                        <input class="form-control valid" name="cedula" id="cedula" type="text" placeholder="admin o número de cédula" required maxlength="20" autocomplete="off">
+                                        <label for="cedula">Correo electrónico o cédula <span style="color:#c00;">*</span></label>
+                                        <input class="form-control" name="cedula" id="cedula" type="text" placeholder="Ingrese su correo o su cédula" maxlength="150" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="contrasena">Contraseña <span style="color:#c00;">*</span></label>
-                                        <input class="form-control valid" name="contrasena" id="contrasena" type="password" placeholder="Ingrese su contraseña" required minlength="5" autocomplete="off">
+                                        <input class="form-control" name="contrasena" id="contrasena" type="password" placeholder="Ingrese su contraseña" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-12 mb-3">
@@ -66,5 +66,5 @@ PintarHeader();
 
 <?php
 PintarFooter();
-ImportJS();
+ImportJS(array('../../assets/js/iniciarsesion.js'));
 ?>

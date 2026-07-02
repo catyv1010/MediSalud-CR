@@ -25,7 +25,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'IniciarSesionModel', 0);
+            AddError($e, 'IniciarSesionModel');
             return null;
         }
     }
@@ -55,12 +55,13 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'RegistrarPacienteModel', 0);
+            AddError($e, 'RegistrarPacienteModel');
             return false;
         }
     }
 
-    function ObtenerUsuarioPorCorreoModel($correo)
+    // valida que el correo exista y este activo, devuelve los datos del usuario
+    function ValidarCorreoModel($correo)
     {
         try
         {
@@ -68,7 +69,7 @@
 
             $correo = $conn -> real_escape_string($correo);
 
-            $sql = "CALL sp_obtener_usuario_por_correo('$correo')";
+            $sql = "CALL sp_validar_correo('$correo')";
             $response = $conn -> query($sql);
 
             $datos = null;
@@ -82,69 +83,21 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'ObtenerUsuarioPorCorreoModel', 0);
+            AddError($e, 'ValidarCorreoModel');
             return null;
         }
     }
 
-    function GuardarTokenModel($usuarioId, $token, $minutos)
+    // le pone al usuario la contrasena temporal generada
+    function ActualizarContrasenaModel($usuarioId, $contrasena)
     {
         try
         {
             $conn = OpenDB();
 
-            $token = $conn -> real_escape_string($token);
-
-            $sql = "CALL sp_guardar_token($usuarioId,'$token',$minutos)";
-            $response = $conn -> query($sql);
-
-            CloseDB($conn);
-            return true;
-        }
-        catch(Exception $e)
-        {
-            AddError($e, 'GuardarTokenModel', $usuarioId);
-            return false;
-        }
-    }
-
-    function ValidarTokenModel($token)
-    {
-        try
-        {
-            $conn = OpenDB();
-
-            $token = $conn -> real_escape_string($token);
-
-            $sql = "CALL sp_validar_token('$token')";
-            $response = $conn -> query($sql);
-
-            $datos = null;
-            while($fila = $response -> fetch_assoc())
-            {
-                $datos = $fila;
-            }
-
-            CloseDB($conn);
-            return $datos;
-        }
-        catch(Exception $e)
-        {
-            AddError($e, 'ValidarTokenModel', 0);
-            return null;
-        }
-    }
-
-    function RestablecerContrasenaModel($token, $contrasena)
-    {
-        try
-        {
-            $conn = OpenDB();
-
-            $token      = $conn -> real_escape_string($token);
             $contrasena = $conn -> real_escape_string($contrasena);
 
-            $sql = "CALL sp_restablecer_contrasena('$token','$contrasena')";
+            $sql = "CALL sp_actualizar_contrasena($usuarioId,'$contrasena')";
             $response = $conn -> query($sql);
 
             $datos = null;
@@ -158,11 +111,12 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'RestablecerContrasenaModel', 0);
+            AddError($e, 'ActualizarContrasenaModel');
             return false;
         }
     }
 
+    // cambio de contrasena con sesion iniciada, el SP valida la actual
     function CambiarContrasenaModel($usuarioId, $actual, $nueva)
     {
         try
@@ -186,7 +140,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'CambiarContrasenaModel', $usuarioId);
+            AddError($e, 'CambiarContrasenaModel');
             return 'ERROR';
         }
     }
@@ -211,7 +165,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'ObtenerPacienteModel', $usuarioId);
+            AddError($e, 'ObtenerPacienteModel');
             return null;
         }
     }
@@ -236,7 +190,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'ObtenerMedicoModel', $usuarioId);
+            AddError($e, 'ObtenerMedicoModel');
             return null;
         }
     }
@@ -261,7 +215,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'ListarUsuariosModel', 0);
+            AddError($e, 'ListarUsuariosModel');
             return array();
         }
     }
@@ -281,7 +235,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'CambiarEstadoUsuarioModel', $usuarioId);
+            AddError($e, 'CambiarEstadoUsuarioModel');
             return false;
         }
     }

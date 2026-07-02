@@ -19,7 +19,7 @@ PintarHeader();
 
                     <?php PintarMensaje(); ?>
 
-                    <form action="../../Controller/InicioController.php" method="POST" id="form-cambiar" class="needs-validation" novalidate>
+                    <form action="../../Controller/InicioController.php" method="POST" id="form-cambiar">
                         <div class="form-group">
                             <label for="contrasena_actual">Contraseña actual <span style="color:#c00;">*</span></label>
                             <input class="form-control" name="contrasena_actual" id="contrasena_actual" type="password" required autocomplete="off">
@@ -45,5 +45,5 @@ PintarHeader();
 
 <?php
 PintarFooter();
-ImportJS();
+ImportJS(array('../../assets/js/cambiarcontrasena.js'));
 ?>

@@ -125,7 +125,8 @@ function PintarFooter()
 }
 
 // scripts y cierre del html
-function ImportJS()
+// $extras: javascripts propios de la vista (ej. las validaciones de su formulario)
+function ImportJS($extras = array())
 {
     echo '
 <!-- scripts -->
@@ -140,9 +141,16 @@ function ImportJS()
 <script src="../../assets/js/wow.min.js"></script>
 <script src="../../assets/js/animated.headline.js"></script>
 <script src="../../assets/js/jquery.nice-select.min.js"></script>
+<script src="../../assets/js/jquery.validate.min.js"></script>
 <script src="../../assets/js/plantilla.js"></script>
-<script src="../../assets/js/medisalud.js"></script>
+';
 
+    foreach ($extras as $script) {
+        echo '<script src="' . $script . '"></script>
+';
+    }
+
+    echo '
 </body>
 </html>
 ';

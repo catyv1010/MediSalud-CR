@@ -33,4 +33,4 @@ config/local.php
 .env
 
 # avance 2
-Model/correos.log
+Controller/correos.log

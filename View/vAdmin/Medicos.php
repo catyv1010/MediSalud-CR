@@ -26,7 +26,7 @@ PintarHeader();
                 <div class="tarjeta-panel">
                     <h5 class="mb-3">Registrar médico</h5>
 
-                    <form action="../../Controller/CatalogosController.php" method="POST" class="needs-validation" novalidate>
+                    <form action="../../Controller/CatalogosController.php" method="POST" id="form-medico">
                         <div class="form-group">
                             <label for="cedula">Cédula <span style="color:#c00;">*</span></label>
                             <input class="form-control" name="cedula" id="cedula" type="text" required maxlength="20" pattern="[0-9]+" placeholder="Solo números">
@@ -121,5 +121,5 @@ PintarHeader();
 
 <?php
 PintarFooter();
-ImportJS();
+ImportJS(array('../../assets/js/medicos.js'));
 ?>

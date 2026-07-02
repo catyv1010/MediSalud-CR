@@ -12,7 +12,7 @@ PintarHeader();
             <div class="row justify-content-center">
                 <div class="col-xl-8 col-lg-8 col-md-10 text-center" style="color:white;">
                     <h2 style="color:white;">Recuperar acceso</h2>
-                    <p>Le enviaremos un enlace para restablecer su contraseña</p>
+                    <p>Le enviaremos una contraseña temporal a su correo</p>
                 </div>
             </div>
         </div>
@@ -27,12 +27,13 @@ PintarHeader();
                         <h3 class="text-center mb-30" style="color:#244cb6;">¿Olvidó su contraseña?</h3>
                         <p class="text-center mb-40" style="color:#666;">
                             Ingrese el correo electrónico asociado a su cuenta y le enviaremos
-                            las instrucciones para restablecer su contraseña.
+                            una contraseña temporal. Al entrar al sistema puede cambiarla
+                            por una de su preferencia.
                         </p>
 
                         <?php PintarMensaje(); ?>
 
-                        <form action="../../Controller/InicioController.php" method="POST" id="form-recuperar" class="needs-validation" novalidate>
+                        <form action="../../Controller/InicioController.php" method="POST" id="form-recuperar">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
@@ -61,5 +62,5 @@ PintarHeader();
 
 <?php
 PintarFooter();
-ImportJS();
+ImportJS(array('../../assets/js/recuperaracceso.js'));
 ?>

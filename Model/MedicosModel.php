@@ -21,7 +21,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'ListarEspecialidadesModel', 0);
+            AddError($e, 'ListarEspecialidadesModel');
             return array();
         }
     }
@@ -46,7 +46,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'MedicosPorEspecialidadModel', 0);
+            AddError($e, 'MedicosPorEspecialidadModel');
             return array();
         }
     }
@@ -71,7 +71,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'FranjasMedicoModel', 0);
+            AddError($e, 'FranjasMedicoModel');
             return array();
         }
     }
@@ -98,7 +98,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'HorasOcupadasModel', 0);
+            AddError($e, 'HorasOcupadasModel');
             return array();
         }
     }
@@ -123,7 +123,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'ListarMedicosAdminModel', 0);
+            AddError($e, 'ListarMedicosAdminModel');
             return array();
         }
     }
@@ -149,7 +149,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'CrearMedicoModel', 0);
+            AddError($e, 'CrearMedicoModel');
             return false;
         }
     }
@@ -172,7 +172,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'ActualizarMedicoModel', 0);
+            AddError($e, 'ActualizarMedicoModel');
             return false;
         }
     }
@@ -194,7 +194,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'CrearEspecialidadModel', 0);
+            AddError($e, 'CrearEspecialidadModel');
             return false;
         }
     }
@@ -216,7 +216,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'ActualizarEspecialidadModel', 0);
+            AddError($e, 'ActualizarEspecialidadModel');
             return false;
         }
     }
@@ -236,7 +236,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'EliminarEspecialidadModel', 0);
+            AddError($e, 'EliminarEspecialidadModel');
             return false;
         }
     }
@@ -259,7 +259,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'AgregarHorarioModel', 0);
+            AddError($e, 'AgregarHorarioModel');
             return false;
         }
     }
@@ -278,7 +278,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'EliminarHorarioModel', 0);
+            AddError($e, 'EliminarHorarioModel');
             return false;
         }
     }

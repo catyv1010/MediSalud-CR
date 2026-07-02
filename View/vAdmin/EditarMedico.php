@@ -32,7 +32,7 @@ PintarHeader();
                             Cédula <?php echo htmlspecialchars($medico['cedula']); ?> — <?php echo htmlspecialchars($medico['correo']); ?>
                         </p>
 
-                        <form action="../../Controller/CatalogosController.php" method="POST" class="needs-validation" novalidate>
+                        <form action="../../Controller/CatalogosController.php" method="POST" id="form-editar-medico">
                             <input type="hidden" name="medico_id" value="<?php echo $medico['id']; ?>">
                             <div class="form-group">
                                 <label for="nombre">Nombre completo <span style="color:#c00;">*</span></label>
@@ -75,5 +75,5 @@ PintarHeader();
 
 <?php
 PintarFooter();
-ImportJS();
+ImportJS(array('../../assets/js/medicos.js'));
 ?>

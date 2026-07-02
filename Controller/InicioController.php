@@ -4,8 +4,8 @@
 // cada formulario se identifica por el name de su boton de submit
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Controller/SeguridadController.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Controller/UtilitarioController.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Model/UsuariosModel.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Model/CorreoModel.php';
 
 // cerrar sesion (llega por GET: InicioController.php?accion=logout)
 if (isset($_GET['accion']) && $_GET['accion'] == 'logout') {
@@ -98,13 +98,14 @@ if (isset($_POST["btnRegistrar"])) {
          <p>Su cuenta fue creada correctamente. Ya puede iniciar sesión y agendar sus citas en línea.</p>
          <p><a href="' . URL_BASE . '/View/vInicio/IniciarSesion.php">Iniciar sesión</a></p>'
     );
-    EnviarCorreoModel($correo, $nombre, 'Bienvenido(a) a MediSalud CR', $cuerpo);
+    EnviarCorreo($correo, $nombre, 'Bienvenido(a) a MediSalud CR', $cuerpo);
 
     header("Location: ../View/vInicio/IniciarSesion.php?msj=" . urlencode("Cuenta creada con éxito. Ya puede iniciar sesión.") . "&tipo=ok");
     exit();
 }
 
-// recuperar acceso: se genera un token y se manda el enlace por correo
+// recuperar acceso: se genera una contrasena temporal y se envia por correo
+// (los 3 pasos de la clase: validar el correo, generar y actualizar, enviar)
 if (isset($_POST["btnRecuperar"])) {
 
     $correo = trim($_POST['correo'] ?? '');
@@ -114,53 +115,31 @@ if (isset($_POST["btnRecuperar"])) {
         exit();
     }
 
-    $usuario = ObtenerUsuarioPorCorreoModel($correo);
+    // paso 1: el correo debe existir y estar activo
+    $datos = ValidarCorreoModel($correo);
 
-    if ($usuario != null) {
+    if ($datos != null) {
 
-        // token aleatorio que vence en 30 minutos
-        $token = md5(uniqid($usuario['id'], true));
-        GuardarTokenModel($usuario['id'], $token, 30);
+        // paso 2: generar la contrasena temporal y actualizarla en la base
+        $temporal = GenerarContrasena();
+        $actualizacion = ActualizarContrasenaModel(intval($datos['id']), $temporal);
 
-        $enlace = URL_BASE . '/View/vInicio/RestablecerContrasena.php?token=' . $token;
-        $cuerpo = PlantillaCorreo(
-            'Recuperación de contraseña',
-            '<p>Hola <strong>' . htmlspecialchars($usuario['nombre']) . '</strong>:</p>
-             <p>Recibimos una solicitud para restablecer su contraseña.
-             Haga clic en el siguiente enlace (vence en 30 minutos):</p>
-             <p><a href="' . $enlace . '">' . $enlace . '</a></p>
-             <p>Si usted no lo solicitó, ignore este mensaje.</p>'
-        );
-        EnviarCorreoModel($usuario['correo'], $usuario['nombre'], 'Recuperación de contraseña - MediSalud CR', $cuerpo);
+        // paso 3: enviarla por correo
+        if ($actualizacion) {
+            $cuerpo = PlantillaCorreo(
+                'Recuperación de acceso',
+                '<p>Hola <strong>' . htmlspecialchars($datos['nombre']) . '</strong>:</p>
+                 <p>Su nueva contraseña temporal es:</p>
+                 <p style="font-size:22px; font-weight:bold; letter-spacing:2px;">' . $temporal . '</p>
+                 <p>Ingrese al sistema con esta contraseña y cámbiela por una de su preferencia
+                 en la opción Contraseña del menú.</p>'
+            );
+            EnviarCorreo($datos['correo'], $datos['nombre'], 'Recuperación de acceso - MediSalud CR', $cuerpo);
+        }
     }
 
     // el mensaje es el mismo exista o no el correo, para no revelar cuáles están registrados
-    header("Location: ../View/vInicio/RecuperarAcceso.php?msj=" . urlencode("Si el correo está registrado, recibirá un enlace de recuperación.") . "&tipo=ok");
-    exit();
-}
-
-// restablecer contrasena desde el enlace del correo
-if (isset($_POST["btnRestablecer"])) {
-
-    $token      = $_POST['token'] ?? '';
-    $contrasena = $_POST['contrasena'] ?? '';
-    $confirmar  = $_POST['contrasena_confirmar'] ?? '';
-
-    if (strlen($contrasena) < 6 || strlen($contrasena) > 20) {
-        header("Location: ../View/vInicio/RestablecerContrasena.php?token=" . urlencode($token) . "&msj=" . urlencode("La contraseña debe tener entre 6 y 20 caracteres.") . "&tipo=error");
-        exit();
-    }
-    if ($contrasena != $confirmar) {
-        header("Location: ../View/vInicio/RestablecerContrasena.php?token=" . urlencode($token) . "&msj=" . urlencode("Las contraseñas no coinciden.") . "&tipo=error");
-        exit();
-    }
-
-    if (RestablecerContrasenaModel($token, $contrasena)) {
-        header("Location: ../View/vInicio/IniciarSesion.php?msj=" . urlencode("Contraseña actualizada. Ya puede iniciar sesión.") . "&tipo=ok");
-        exit();
-    }
-
-    header("Location: ../View/vInicio/RecuperarAcceso.php?msj=" . urlencode("El enlace ya no es válido. Solicite uno nuevo.") . "&tipo=error");
+    header("Location: ../View/vInicio/IniciarSesion.php?msj=" . urlencode("Si el correo está registrado, recibirá su contraseña temporal.") . "&tipo=ok");
     exit();
 }
 

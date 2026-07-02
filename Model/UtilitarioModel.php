@@ -13,10 +13,17 @@
     }
 
     // guarda los errores en la bitacora de la base
-    function AddError($error, $accion, $idUsuario)
+    // el usuario lo toma solito de la sesion (0 si nadie se ha logueado)
+    function AddError($error, $accion)
     {
         try
         {
+            if (session_status() === PHP_SESSION_NONE)
+            {
+                session_start();
+            }
+            $idUsuario = isset($_SESSION['usuario_id']) ? intval($_SESSION['usuario_id']) : 0;
+
             $conn = OpenDB();
 
             $mensaje = $conn -> real_escape_string($error -> getMessage());

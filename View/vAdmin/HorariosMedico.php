@@ -37,7 +37,7 @@ PintarHeader();
                     <div class="tarjeta-panel">
                         <h5 class="mb-3">Agregar franja</h5>
 
-                        <form action="../../Controller/CatalogosController.php" method="POST" class="needs-validation" novalidate>
+                        <form action="../../Controller/CatalogosController.php" method="POST" id="form-horario">
                             <input type="hidden" name="medico_id" value="<?php echo $medico['id']; ?>">
                             <div class="form-group">
                                 <label for="dia_semana">Día <span style="color:#c00;">*</span></label>
@@ -119,5 +119,5 @@ PintarHeader();
 
 <?php
 PintarFooter();
-ImportJS();
+ImportJS(array('../../assets/js/horariosmedico.js'));
 ?>

@@ -4,7 +4,7 @@
     // para activarlo: crear una contrasena de aplicacion en
     // https://myaccount.google.com/apppasswords, pegarla abajo
     // y cambiar CORREO_ACTIVO a true
-    // mientras este en false los correos se guardan en Model/correos.log
+    // mientras este en false los correos se guardan en Controller/correos.log
     // ojo: no subir este archivo con la contrasena real a un repo publico
 
     define('CORREO_ACTIVO', false);

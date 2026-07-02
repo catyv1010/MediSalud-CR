@@ -4,9 +4,9 @@
 // y las funciones que las vistas usan para pintar sus tablas
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Controller/SeguridadController.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Controller/UtilitarioController.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Model/CitasModel.php';
 include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Model/MedicosModel.php';
-include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Model/CorreoModel.php';
 
 // llamado ajax: medicos de una especialidad
 // CitasController.php?accion=medicos&especialidad=N
@@ -121,7 +121,7 @@ if (isset($_POST["btnAgendar"])) {
              </ul>
              <p>Si no puede asistir, recuerde cancelar con al menos 24 horas de anticipación.</p>'
         );
-        EnviarCorreoModel($cita['correo_paciente'], $cita['paciente'], 'Cita confirmada - MediSalud CR', $cuerpo);
+        EnviarCorreo($cita['correo_paciente'], $cita['paciente'], 'Cita confirmada - MediSalud CR', $cuerpo);
     }
 
     header("Location: ../View/vCitas/MisCitas.php?msj=" . urlencode("Cita agendada con éxito. Se envió un comprobante a su correo.") . "&tipo=ok");

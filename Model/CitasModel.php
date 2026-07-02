@@ -26,7 +26,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'AgendarCitaModel', 0);
+            AddError($e, 'AgendarCitaModel');
             return false;
         }
     }
@@ -46,7 +46,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'CancelarCitaModel', 0);
+            AddError($e, 'CancelarCitaModel');
             return false;
         }
     }
@@ -71,7 +71,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'ListarCitasPacienteModel', 0);
+            AddError($e, 'ListarCitasPacienteModel');
             return array();
         }
     }
@@ -96,7 +96,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'ListarCitasMedicoModel', 0);
+            AddError($e, 'ListarCitasMedicoModel');
             return array();
         }
     }
@@ -123,7 +123,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'AgendaDiariaMedicoModel', 0);
+            AddError($e, 'AgendaDiariaMedicoModel');
             return array();
         }
     }
@@ -148,7 +148,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'ListarCitasAdminModel', 0);
+            AddError($e, 'ListarCitasAdminModel');
             return array();
         }
     }
@@ -167,7 +167,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'ActualizarEstadoCitaModel', 0);
+            AddError($e, 'ActualizarEstadoCitaModel');
             return false;
         }
     }
@@ -192,7 +192,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'DatosCitaModel', 0);
+            AddError($e, 'DatosCitaModel');
             return null;
         }
     }
@@ -217,7 +217,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'CitasDelMesModel', 0);
+            AddError($e, 'CitasDelMesModel');
             return array();
         }
     }
@@ -242,7 +242,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'ReporteMensualModel', 0);
+            AddError($e, 'ReporteMensualModel');
             return array();
         }
     }
@@ -267,7 +267,7 @@
         }
         catch(Exception $e)
         {
-            AddError($e, 'ContadoresPanelModel', 0);
+            AddError($e, 'ContadoresPanelModel');
             return null;
         }
     }

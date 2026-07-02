@@ -36,7 +36,7 @@ PintarHeader();
                 <div class="tarjeta-panel">
                     <h5 class="mb-3"><?php echo ($editando == null) ? 'Nueva especialidad' : 'Editar especialidad'; ?></h5>
 
-                    <form action="../../Controller/CatalogosController.php" method="POST" class="needs-validation" novalidate>
+                    <form action="../../Controller/CatalogosController.php" method="POST" id="form-especialidad">
                         <?php if ($editando != null) { ?>
                             <input type="hidden" name="id" value="<?php echo $editando['id']; ?>">
                         <?php } ?>
@@ -102,5 +102,5 @@ PintarHeader();
 
 <?php
 PintarFooter();
-ImportJS();
+ImportJS(array('../../assets/js/especialidades.js'));
 ?>

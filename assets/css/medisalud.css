@@ -148,6 +148,22 @@ footer h4 {
     margin-left: 8px;
 }
 
+/* mensajes de error de jquery validate */
+
+label.error {
+    color: #b02a2a;
+    font-size: 13px;
+    font-weight: normal;
+    display: block;
+    margin-top: 3px;
+}
+
+input.error,
+select.error,
+textarea.error {
+    border-color: #b02a2a;
+}
+
 /* calendario mensual */
 
 .calendario th {

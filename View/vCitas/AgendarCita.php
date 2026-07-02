@@ -25,7 +25,7 @@ PintarHeader();
 
                     <?php PintarMensaje(); ?>
 
-                    <form action="../../Controller/CitasController.php" method="POST" id="form-agendar" class="needs-validation" novalidate>
+                    <form action="../../Controller/CitasController.php" method="POST" id="form-agendar">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -83,5 +83,5 @@ PintarHeader();
 
 <?php
 PintarFooter();
-ImportJS();
+ImportJS(array('../../assets/js/agendarcita.js'));
 ?>
