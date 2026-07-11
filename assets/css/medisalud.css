@@ -38,13 +38,19 @@ main a {
 }
 
 /* enlaces rapidos del footer al mismo tamano que el resto del texto */
-.enlaces-footer li a {
+/* el selector repite las clases de la plantilla para ganarle en especificidad */
+.footer-tittle ul.enlaces-footer li,
+.footer-tittle ul.enlaces-footer li a {
     color: #dfe7f5;
     font-size: 16px;
-    line-height: 2.1;
+    line-height: 1.6;
 }
 
-.enlaces-footer li a:hover {
+.footer-tittle ul.enlaces-footer li {
+    margin-bottom: 10px;
+}
+
+.footer-tittle ul.enlaces-footer li a:hover {
     color: #ffffff;
     text-decoration: underline;
 }
