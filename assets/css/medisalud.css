@@ -233,4 +233,28 @@ textarea.error,
     margin-bottom: 3px;
 }
 
-/* tabla de cit
+/* tabla de citas */
+
+.tabla-citas th {
+    background: #eef3fd;
+    color: #1f2c4d;
+    white-space: nowrap;
+}
+
+.tabla-citas td {
+    vertical-align: middle;
+}
+
+/* estados de la cita */
+.badge-estado {
+    border-radius: 12px;
+    padding: 5px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.estado-agendada   { background: #e3ecff; color: #1a3a8c; }
+.estado-atendida   { background: #e2f6e6; color: #1e7534; }
+.estado-cancelada  { background: #fdeaea; color: #b02a2a; }
+.estado-no-asistio { background: #f2f2f2; color: #5a6272; }

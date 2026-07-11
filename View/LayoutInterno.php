@@ -123,4 +123,7 @@ function PintarMensaje()
 function ClaseEstado($estado)
 {
     if ($estado === 'Agendada')  return 'estado-agendada';
-    if ($estado === 'Atendida')  re
+    if ($estado === 'Atendida')  return 'estado-atendida';
+    if ($estado === 'Cancelada') return 'estado-cancelada';
+    return 'estado-no-asistio';
+}
