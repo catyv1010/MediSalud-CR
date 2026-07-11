@@ -3,48 +3,57 @@
 $titulo_pagina = "Médicos - MediSalud CR";
 
 // lista de prueba, despues la cargamos desde la base
+// cada medico tiene su propia foto en assets/img/medicos
+// el ancla permite llegar directo a cada medico desde la pagina de especialidades
 $medicos = [
     [
         "nombre" => "Dra. Ana Lucía Mora Vargas",
         "especialidad" => "Medicina General",
         "colegiado" => "MED-12453",
-        "color" => "#244cb6",
-        "iniciales" => "AM"
+        "foto" => "../../assets/img/medicos/medico1.jpg",
+        "ancla" => "esp-medicina-general"
     ],
     [
         "nombre" => "Dr. Carlos Esteban Jiménez Salas",
         "especialidad" => "Cardiología",
         "colegiado" => "MED-08977",
-        "color" => "#c00000",
-        "iniciales" => "CJ"
+        "foto" => "../../assets/img/medicos/medico2.jpg",
+        "ancla" => "esp-cardiologia"
     ],
     [
         "nombre" => "Dra. María Fernanda Rojas Castro",
         "especialidad" => "Pediatría",
         "colegiado" => "MED-15321",
-        "color" => "#2e75b6",
-        "iniciales" => "MR"
+        "foto" => "../../assets/img/medicos/medico3.jpg",
+        "ancla" => "esp-pediatria"
     ],
     [
         "nombre" => "Dr. José Andrés Picado Solano",
         "especialidad" => "Dermatología",
         "colegiado" => "MED-11204",
-        "color" => "#70ad47",
-        "iniciales" => "JP"
+        "foto" => "../../assets/img/medicos/medico4.jpg",
+        "ancla" => "esp-dermatologia"
     ],
     [
         "nombre" => "Dra. Laura Patricia Quirós Méndez",
         "especialidad" => "Ginecología",
         "colegiado" => "MED-09845",
-        "color" => "#9b59b6",
-        "iniciales" => "LQ"
+        "foto" => "../../assets/img/medicos/medico5.jpg",
+        "ancla" => "esp-ginecologia"
     ],
     [
         "nombre" => "Dr. Roberto Antonio Vega Ramírez",
         "especialidad" => "Ortopedia",
         "colegiado" => "MED-13702",
-        "color" => "#e67e22",
-        "iniciales" => "RV"
+        "foto" => "../../assets/img/medicos/medico6.jpg",
+        "ancla" => "esp-ortopedia"
+    ],
+    [
+        "nombre" => "Dr. Esteban Josué Ulate Brenes",
+        "especialidad" => "Nutrición",
+        "colegiado" => "CPN-04512",
+        "foto" => "../../assets/img/medicos/medico7.jpg",
+        "ancla" => "esp-nutricion"
     ],
 ];
 
@@ -79,20 +88,18 @@ PintarHeader();
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row justify-content-center">
                 <?php foreach ($medicos as $m): ?>
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div style="background:white; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.06); overflow:hidden; height:100%;">
-                            <div style="background:<?= $m['color'] ?>; padding:40px; text-align:center;">
-                                <div style="width:100px; height:100px; background:white; border-radius:50%; margin:0 auto; display:flex; align-items:center; justify-content:center;">
-                                    <span style="color:<?= $m['color'] ?>; font-size:36px; font-weight:bold;"><?= $m['iniciales'] ?></span>
-                                </div>
+                    <div class="col-lg-4 col-md-6 mb-4 tarjeta-medico-ancla" id="<?= $m['ancla'] ?>">
+                        <div class="tarjeta-medico">
+                            <div class="tarjeta-medico-foto">
+                                <img src="<?= $m['foto'] ?>" alt="<?= htmlspecialchars($m['nombre']) ?>">
                             </div>
-                            <div style="padding:25px;">
-                                <h5 style="color:#244cb6; margin-bottom:8px;"><?= htmlspecialchars($m['nombre']) ?></h5>
-                                <p style="color:#666; margin-bottom:5px;"><strong>Especialidad:</strong> <?= htmlspecialchars($m['especialidad']) ?></p>
-                                <p style="color:#999; font-size:13px; margin-bottom:18px;">Colegiado: <?= htmlspecialchars($m['colegiado']) ?></p>
-                                <a href="IniciarSesion.php" class="btn" style="background:<?= $m['color'] ?>; color:white; width:100%; padding:10px;">Ver agenda</a>
+                            <div class="tarjeta-medico-info">
+                                <h5><?= htmlspecialchars($m['nombre']) ?></h5>
+                                <p class="especialidad"><?= htmlspecialchars($m['especialidad']) ?></p>
+                                <p class="colegiado">Colegiado: <?= htmlspecialchars($m['colegiado']) ?></p>
+                                <a href="IniciarSesion.php" class="btn-medisalud">Ver agenda</a>
                             </div>
                         </div>
                     </div>

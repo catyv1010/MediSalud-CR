@@ -52,11 +52,11 @@ PintarHeader();
         <div class="container">
             <div class="row">
                 <div class="col-md-4 mb-4">
-                    <div style="background:white; padding:35px 25px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.06); height:100%;">
-                        <div style="width:60px; height:60px; background:#244cb6; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
-                            <i class="fa fa-bullseye" style="color:white; font-size:24px;"></i>
+                    <div style="background:white; padding:42px 32px; border-radius:14px; box-shadow:0 6px 24px rgba(31,44,77,0.08); height:100%;">
+                        <div style="width:78px; height:78px; background:#244cb6; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:22px;">
+                            <i class="fa fa-bullseye" style="color:white; font-size:32px;"></i>
                         </div>
-                        <h4 style="color:#244cb6;">Misión</h4>
+                        <h4 style="color:#244cb6; font-size:26px; margin-bottom:14px;">Misión</h4>
                         <p style="color:#666; line-height:1.7;">
                             Brindar atención médica oportuna y de calidad mediante el uso de tecnología
                             que facilite el acceso a citas, reduzca los tiempos de espera y mejore la
@@ -65,11 +65,11 @@ PintarHeader();
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div style="background:white; padding:35px 25px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.06); height:100%;">
-                        <div style="width:60px; height:60px; background:#2e75b6; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
-                            <i class="fa fa-eye" style="color:white; font-size:24px;"></i>
+                    <div style="background:white; padding:42px 32px; border-radius:14px; box-shadow:0 6px 24px rgba(31,44,77,0.08); height:100%;">
+                        <div style="width:78px; height:78px; background:#2e75b6; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:22px;">
+                            <i class="fa fa-eye" style="color:white; font-size:32px;"></i>
                         </div>
-                        <h4 style="color:#2e75b6;">Visión</h4>
+                        <h4 style="color:#2e75b6; font-size:26px; margin-bottom:14px;">Visión</h4>
                         <p style="color:#666; line-height:1.7;">
                             Consolidarnos como una clínica de referencia en Costa Rica por la calidad
                             del servicio y la innovación tecnológica, integrando especialidades, expediente
@@ -78,11 +78,11 @@ PintarHeader();
                     </div>
                 </div>
                 <div class="col-md-4 mb-4">
-                    <div style="background:white; padding:35px 25px; border-radius:8px; box-shadow:0 4px 15px rgba(0,0,0,0.06); height:100%;">
-                        <div style="width:60px; height:60px; background:#70ad47; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
-                            <i class="fa fa-heart" style="color:white; font-size:24px;"></i>
+                    <div style="background:white; padding:42px 32px; border-radius:14px; box-shadow:0 6px 24px rgba(31,44,77,0.08); height:100%;">
+                        <div style="width:78px; height:78px; background:#70ad47; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:22px;">
+                            <i class="fa fa-heart" style="color:white; font-size:32px;"></i>
                         </div>
-                        <h4 style="color:#70ad47;">Valores</h4>
+                        <h4 style="color:#70ad47; font-size:26px; margin-bottom:14px;">Valores</h4>
                         <p style="color:#666; line-height:1.7;">
                             Compromiso con el paciente, calidad humana, respeto, confidencialidad de la
                             información clínica, trabajo en equipo y mejora continua de los procesos

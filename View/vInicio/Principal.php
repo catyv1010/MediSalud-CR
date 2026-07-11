@@ -98,7 +98,7 @@ PintarHeader();
                 ];
                 foreach ($especialidades as $esp): ?>
                 <div class="col-xl-4 col-lg-4 col-md-6">
-                    <div class="single-cat text-center mb-30" style="background:white; padding:30px; border-radius:8px;">
+                    <div class="single-cat text-center mb-30">
                         <div class="cat-icon"><i class="<?= $esp[2] ?>"></i></div>
                         <div class="cat-cap">
                             <h5><?= $esp[0] ?></h5>

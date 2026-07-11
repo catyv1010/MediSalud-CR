@@ -1,5 +1,191 @@
 /* estilos propios del proyecto - MediSalud CR */
 
+/* ========== mejoras visuales generales ========== */
+/* la plantilla original usa rellenos gigantes (hasta 195px) y letra pequena;
+   aqui se compacta el espacio y se agranda la tipografia de todo el sitio */
+
+body {
+    font-size: 17px;
+}
+
+main p,
+main li {
+    font-size: 17px;
+    line-height: 1.75;
+}
+
+/* secciones mas compactas (la plantilla traia 195px arriba y 180px abajo) */
+.section-padding30 {
+    padding-top: 75px !important;
+    padding-bottom: 55px !important;
+}
+
+.pt-150 {
+    padding-top: 85px !important;
+}
+
+.pb-150 {
+    padding-bottom: 85px !important;
+}
+
+.slider-height {
+    height: 640px !important;
+    min-height: 0 !important;
+}
+
+.mb-55 {
+    margin-bottom: 38px !important;
+}
+
+.mb-50 {
+    margin-bottom: 30px !important;
+}
+
+/* encabezados de pagina (franja azul) mas compactos y con letra grande */
+.bradcam-area {
+    padding: 70px 0 !important;
+}
+
+.bradcam-area h2 {
+    font-size: 44px;
+    margin-bottom: 12px;
+}
+
+.bradcam-area p {
+    font-size: 19px;
+}
+
+/* titulos de seccion */
+.section-tittle span {
+    font-size: 17px;
+    letter-spacing: 2px;
+}
+
+.section-tittle h2 {
+    font-size: 42px;
+}
+
+/* banner principal */
+.hero__caption span {
+    font-size: 19px;
+}
+
+.hero__caption p {
+    font-size: 18px;
+}
+
+/* tarjetas de servicios y especialidades */
+.single-cat {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 40px 26px;
+    box-shadow: 0 6px 24px rgba(31, 44, 77, 0.07);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.single-cat:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 34px rgba(31, 44, 77, 0.13);
+}
+
+.cat-icon {
+    width: 92px;
+    height: 92px;
+    margin: 0 auto 22px;
+    background: linear-gradient(135deg, #244cb6 0%, #2e75b6 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cat-icon i {
+    font-size: 38px;
+    color: #ffffff;
+}
+
+.cat-cap h5 {
+    font-size: 23px;
+    color: #1f2c4d;
+    margin-bottom: 12px;
+}
+
+.cat-cap p {
+    font-size: 16px;
+    color: #5a6272;
+    margin-bottom: 0;
+}
+
+/* tarjetas de medicos con foto */
+.tarjeta-medico {
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 6px 24px rgba(31, 44, 77, 0.08);
+    overflow: hidden;
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tarjeta-medico:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 34px rgba(31, 44, 77, 0.14);
+}
+
+.tarjeta-medico-foto {
+    background: linear-gradient(180deg, #e8efff 0%, #f7faff 100%);
+    text-align: center;
+    padding-top: 18px;
+}
+
+.tarjeta-medico-foto img {
+    width: 100%;
+    max-width: 260px;
+    height: 250px;
+    object-fit: cover;
+    object-position: top center;
+}
+
+.tarjeta-medico-info {
+    padding: 26px 24px 30px;
+    text-align: center;
+}
+
+.tarjeta-medico-info h5 {
+    font-size: 21px;
+    color: #1f2c4d;
+    margin-bottom: 6px;
+}
+
+.tarjeta-medico-info .especialidad {
+    color: #244cb6;
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.tarjeta-medico-info .colegiado {
+    color: #8d94a3;
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+/* al llegar desde "Ver médico" en especialidades, el medico destino se resalta */
+.tarjeta-medico-ancla {
+    scroll-margin-top: 120px;
+}
+
+.tarjeta-medico-ancla:target .tarjeta-medico {
+    box-shadow: 0 0 0 4px #244cb6, 0 14px 34px rgba(31, 44, 77, 0.18);
+}
+
+/* enlaces dentro de los formularios (ej. olvido su contrasena) */
+.form-contact a {
+    font-size: 16px;
+    font-weight: 500;
+}
+/* ========== fin mejoras visuales ========== */
+
 /* contraste de textos */
 
 /* la plantilla trae parrafos en gris muy claro; se oscurecen para que se lean */
@@ -87,6 +273,7 @@ footer h4 {
 /* boton principal */
 
 .btn-medisalud {
+    display: inline-block;
     width: 100%;
     background: #244cb6;
     color: #ffffff;
@@ -95,6 +282,7 @@ footer h4 {
     border-radius: 6px;
     font-size: 16px;
     font-weight: bold;
+    text-align: center;
     cursor: pointer;
     transition: background 0.2s;
 }
