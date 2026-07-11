@@ -37,6 +37,36 @@ main a {
     color: #dfe7f5;
 }
 
+/* enlaces rapidos del footer al mismo tamano que el resto del texto */
+.enlaces-footer li a {
+    color: #dfe7f5;
+    font-size: 16px;
+    line-height: 2.1;
+}
+
+.enlaces-footer li a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* letras mas grandes en los formularios (registro, login, recuperar) */
+.form-contact label {
+    font-size: 17px;
+    color: #1f2c4d;
+    margin-bottom: 6px;
+}
+
+.form-contact .form-control {
+    font-size: 16px;
+    color: #3d4451;
+    height: auto;
+    padding: 12px 14px;
+}
+
+.form-contact .form-control::placeholder {
+    font-size: 15px;
+}
+
 /* el footer es oscuro: ahi el texto va claro */
 footer p,
 footer li,

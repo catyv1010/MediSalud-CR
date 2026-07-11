@@ -98,17 +98,17 @@ function PintarFooter()
                     <div class="footer-tittle mb-50">
                         <h4 style="color:white;">Contacto</h4>
                         <p>San José, Costa Rica</p>
-                        <p>Tel: (506) 0000-0000</p>
+                        <p>Tel: (506) 8895-0175</p>
                         <p>contacto@medisaludcr.example</p>
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6">
                     <div class="footer-tittle mb-50">
                         <h4 style="color:white;">Enlaces rápidos</h4>
-                        <ul style="list-style:none; padding:0;">
-                            <li><a href="IniciarSesion.php" style="color:#dfe7f5;">Iniciar sesión</a></li>
-                            <li><a href="RegistrarUsuarios.php" style="color:#dfe7f5;">Crear cuenta</a></li>
-                            <li><a href="RecuperarAcceso.php" style="color:#dfe7f5;">Recuperar acceso</a></li>
+                        <ul class="enlaces-footer" style="list-style:none; padding:0;">
+                            <li><a href="IniciarSesion.php">Iniciar sesión</a></li>
+                            <li><a href="RegistrarUsuarios.php">Crear cuenta</a></li>
+                            <li><a href="RecuperarAcceso.php">Recuperar acceso</a></li>
                         </ul>
                     </div>
                 </div>

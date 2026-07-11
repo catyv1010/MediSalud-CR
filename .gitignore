@@ -35,3 +35,6 @@ config/local.php
 
 # avance 2
 Controller/correos.log
+
+# contrasena de aplicacion de gmail de cada integrante (NUNCA se sube)
+Controller/clave_correo.txt
