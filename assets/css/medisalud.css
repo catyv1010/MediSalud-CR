@@ -482,3 +482,28 @@ textarea.error,
 .estado-atendida   { background: #e2f6e6; color: #1e7534; }
 .estado-cancelada  { background: #fdeaea; color: #b02a2a; }
 .estado-no-asistio { background: #f2f2f2; color: #5a6272; }
+
+/* pie de pagina pegado al fondo */
+
+/* en las pantallas con poco contenido el footer quedaba a media pagina y
+   debajo se veia una franja blanca. con flex el body ocupa toda la altura de
+   la ventana y el margin-top:auto empuja el footer hasta el fondo */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+body > header,
+body > footer {
+    flex-shrink: 0;
+}
+
+/* el contenido crece y ocupa todo el espacio libre */
+body > main {
+    flex: 1 0 auto;
+}
+
+body > footer {
+    margin-top: auto;
+}
