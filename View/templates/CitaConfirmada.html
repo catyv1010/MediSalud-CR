@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cita confirmada</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f4f7fc;font-family:Arial,Helvetica,sans-serif;">
+
+    <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f7fc;padding:30px 0;">
+        <tr>
+            <td align="center">
+
+                <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.1);">
+
+                    <!-- encabezado -->
+                    <tr>
+                        <td align="center" style="background:#244cb6;padding:25px;">
+                            <h1 style="color:#ffffff;margin:0;font-size:24px;">
+                                Clínica MediSalud CR
+                            </h1>
+                            <p style="color:#cfe0ff;margin:8px 0 0 0;font-size:14px;">
+                                Comprobante de cita
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- contenido -->
+                    <tr>
+                        <td style="padding:35px;color:#3d4451;font-size:16px;line-height:1.6;">
+
+                            <p>Hola {{NOMBRE}}</p>
+
+                            <p>
+                                Su cita fue agendada con éxito. Estos son los detalles:
+                            </p>
+
+                            <table width="100%" cellpadding="8" cellspacing="0"
+                                   style="background:#f4f7fc;border-radius:6px;margin:20px 0;font-size:15px;">
+                                <tr>
+                                    <td style="color:#5a6272;width:140px;"><strong>Médico:</strong></td>
+                                    <td style="color:#1f2c4d;">{{MEDICO}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="color:#5a6272;"><strong>Especialidad:</strong></td>
+                                    <td style="color:#1f2c4d;">{{ESPECIALIDAD}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="color:#5a6272;"><strong>Fecha:</strong></td>
+                                    <td style="color:#1f2c4d;">{{FECHA}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="color:#5a6272;"><strong>Hora:</strong></td>
+                                    <td style="color:#1f2c4d;">{{HORA}}</td>
+                                </tr>
+                            </table>
+
+                            <p>
+                                Si no puede asistir, recuerde cancelar con al menos 24 horas de anticipación.
+                            </p>
+
+                            <p style="margin-top:35px;">
+                                Saludos,<br>
+                                <strong>Equipo de Soporte — MediSalud CR</strong>
+                            </p>
+
+                        </td>
+                    </tr>
+
+                    <!-- pie -->
+                    <tr>
+                        <td style="background:#f4f7fc;padding:20px;text-align:center;color:#5a6272;font-size:13px;">
+                            Este es un correo generado automáticamente por el sistema de citas de MediSalud CR.
+                            Por favor, no responda a este mensaje.
+                        </td>
+                    </tr>
+
+                </table>
+
+            </td>
+        </tr>
+    </table>
+
+</body>
+</html>

@@ -62,9 +62,11 @@ function PintarHeader()
                 <div class="col-lg-4 col-md-5 text-right usuario-sesion">
                     <i class="fa fa-user-circle"></i> ' . $nombre . '
                     <span class="rol">' . htmlspecialchars($rol) . '</span>
-                    <a href="/MediSalud-CR/Controller/InicioController.php?accion=logout"
-                       style="color:#ffd6d6; margin-left:15px;">
-                       <i class="fa fa-sign-out-alt"></i> Salir</a>
+                    <form action="/MediSalud-CR/Controller/InicioController.php" method="POST" class="form-salir">
+                        <button id="btnSalir" name="btnSalir" type="submit" class="btn-salir">
+                            <i class="fa fa-sign-out-alt"></i> Salir
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -121,7 +123,4 @@ function PintarMensaje()
 function ClaseEstado($estado)
 {
     if ($estado === 'Agendada')  return 'estado-agendada';
-    if ($estado === 'Atendida')  return 'estado-atendida';
-    if ($estado === 'Cancelada') return 'estado-cancelada';
-    return 'estado-no-asistio';
-}
+    if ($estado === 'Atendida')  re

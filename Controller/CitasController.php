@@ -107,21 +107,17 @@ if (isset($_POST["btnAgendar"])) {
     }
 
     // notificacion por correo con el comprobante
+    // se lee la plantilla html y se reemplazan los valores de la cita
     $cita = DatosCitaModel(intval($citaId));
     if ($cita != null) {
-        $cuerpo = PlantillaCorreo(
-            'Cita confirmada',
-            '<p>Hola <strong>' . htmlspecialchars($cita['paciente']) . '</strong>:</p>
-             <p>Su cita fue agendada con éxito. Estos son los detalles:</p>
-             <ul>
-                <li><strong>Médico:</strong> ' . htmlspecialchars($cita['medico']) . '</li>
-                <li><strong>Especialidad:</strong> ' . htmlspecialchars($cita['especialidad']) . '</li>
-                <li><strong>Fecha:</strong> ' . $cita['fecha'] . '</li>
-                <li><strong>Hora:</strong> ' . substr($cita['hora'], 0, 5) . '</li>
-             </ul>
-             <p>Si no puede asistir, recuerde cancelar con al menos 24 horas de anticipación.</p>'
-        );
-        EnviarCorreo($cita['correo_paciente'], $cita['paciente'], 'Cita confirmada - MediSalud CR', $cuerpo);
+        $plantilla = file_get_contents($_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/View/templates/CitaConfirmada.html');
+        $plantilla = str_replace("{{NOMBRE}}", $cita['paciente'], $plantilla);
+        $plantilla = str_replace("{{MEDICO}}", $cita['medico'], $plantilla);
+        $plantilla = str_replace("{{ESPECIALIDAD}}", $cita['especialidad'], $plantilla);
+        $plantilla = str_replace("{{FECHA}}", $cita['fecha'], $plantilla);
+        $plantilla = str_replace("{{HORA}}", substr($cita['hora'], 0, 5), $plantilla);
+
+        EnviarCorreo($cita['correo_paciente'], $cita['paciente'], 'Cita confirmada - MediSalud CR', $plantilla);
     }
 
     header("Location: ../View/vCitas/MisCitas.php?msj=" . urlencode("Cita agendada con éxito. Se envió un comprobante a su correo.") . "&tipo=ok");
@@ -238,3 +234,4 @@ function ReporteMensualControl($mes, $anio)
 {
     return ReporteMensualModel($mes, $anio);
 }
+                                                                                                                                 

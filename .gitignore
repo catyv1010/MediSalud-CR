@@ -4,7 +4,8 @@ Thumbs.db
 desktop.ini
 
 # carpetas de editores e IDEs
-.vscode/
+.vscode/*
+!.vscode/launch.json
 .idea/
 *.sublime-*
 
