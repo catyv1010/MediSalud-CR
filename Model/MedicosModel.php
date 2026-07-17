@@ -282,3 +282,46 @@
             return false;
         }
     }
+
+    function ListarMedicosPublicoModel()
+{
+    try
+    {
+        $conn = OpenDB();
+        $sql = "CALL sp_listar_medicos_publico()";
+        $response = $conn -> query($sql);
+
+        $datos = array();
+        while($fila = $response -> fetch_assoc())
+        {
+            $datos[] = $fila;
+        }
+
+        CloseDB($conn);
+        return $datos;
+    }
+    catch(Exception $e)
+    {
+        AddError($e, 'ListarMedicosPublicoModel');
+        return array();
+    }
+}
+
+  function ObtenerMedicoPublicoModel($medicoId)
+{
+    try
+    {
+        $conn = OpenDB();
+        $sql = "CALL sp_obtener_medico_publico($medicoId)";
+        $response = $conn -> query($sql);
+        $fila = $response -> fetch_assoc();
+
+        CloseDB($conn);
+        return $fila;
+    }
+    catch(Exception $e)
+    {
+        AddError($e, 'ObtenerMedicoPublicoModel');
+        return null;
+    }
+}  
