@@ -254,6 +254,38 @@ BEGIN
 END //
 
 
+-- datos del usuario logueado, para precargar la pantalla de mi perfil
+CREATE PROCEDURE sp_consultar_usuario(
+  IN p_usuario_id INT
+)
+BEGIN
+  SELECT id, cedula, nombre, correo, telefono
+  FROM usuarios
+  WHERE id = p_usuario_id;
+END //
+
+
+-- actualiza los datos personales desde la pantalla de mi perfil
+CREATE PROCEDURE sp_actualizar_perfil(
+  IN p_usuario_id INT,
+  IN p_cedula     VARCHAR(20),
+  IN p_nombre     VARCHAR(150),
+  IN p_correo     VARCHAR(150),
+  IN p_telefono   VARCHAR(20)
+)
+BEGIN
+  UPDATE usuarios
+  SET cedula   = p_cedula,
+      nombre   = p_nombre,
+      correo   = p_correo,
+      telefono = p_telefono
+  WHERE id = p_usuario_id;
+
+  SELECT 'OK' AS resultado;
+END //
+
+
+
 -- especialidades para llenar los selects
 CREATE PROCEDURE sp_listar_especialidades()
 BEGIN

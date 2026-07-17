@@ -1,6 +1,6 @@
 <?php
-// controlador del modulo de inicio: login, registro, logout,
-// recuperacion y cambio de contrasena
+// controlador del modulo de inicio: login, registro, logout
+// y recuperacion de acceso
 // cada formulario se identifica por el name de su boton de submit
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Controller/SeguridadController.php';
@@ -11,8 +11,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Model/UsuariosModel.php'
 // variables de sesion y se devuelve al usuario a iniciar sesion
 if (isset($_POST["btnSalir"])) {
 
-    session_unset();
-    session_destroy();
+    CerrarSesion();
 
     header("Location: ../View/vInicio/IniciarSesion.php?msj=" . urlencode("Sesión cerrada correctamente.") . "&tipo=ok");
     exit();
@@ -135,40 +134,6 @@ if (isset($_POST["btnRecuperar"])) {
 
     // el mensaje es el mismo exista o no el correo, para no revelar cuáles están registrados
     header("Location: ../View/vInicio/IniciarSesion.php?msj=" . urlencode("Si el correo está registrado, recibirá su contraseña temporal.") . "&tipo=ok");
-    exit();
-}
-
-// cambio de contrasena con la sesion iniciada
-if (isset($_POST["btnCambiarContrasena"])) {
-
-    ValidarSesion();
-
-    $actual    = $_POST['contrasena_actual'] ?? '';
-    $nueva     = $_POST['contrasena_nueva'] ?? '';
-    $confirmar = $_POST['contrasena_confirmar'] ?? '';
-
-    if (strlen($nueva) < 6 || strlen($nueva) > 20) {
-        header("Location: ../View/vPanel/CambiarContrasena.php?msj=" . urlencode("La contraseña nueva debe tener entre 6 y 20 caracteres.") . "&tipo=error");
-        exit();
-    }
-    if ($nueva != $confirmar) {
-        header("Location: ../View/vPanel/CambiarContrasena.php?msj=" . urlencode("La confirmación no coincide con la contraseña nueva.") . "&tipo=error");
-        exit();
-    }
-
-    // el SP valida la contrasena actual antes de cambiarla
-    $resultado = CambiarContrasenaModel(intval($_SESSION['usuario_id']), $actual, $nueva);
-
-    if ($resultado == 'OK') {
-        header("Location: ../View/vPanel/CambiarContrasena.php?msj=" . urlencode("Contraseña actualizada correctamente.") . "&tipo=ok");
-        exit();
-    }
-    if ($resultado == 'ACTUAL_INCORRECTA') {
-        header("Location: ../View/vPanel/CambiarContrasena.php?msj=" . urlencode("La contraseña actual es incorrecta.") . "&tipo=error");
-        exit();
-    }
-
-    header("Location: ../View/vPanel/CambiarContrasena.php?msj=" . urlencode("No fue posible actualizar la contraseña.") . "&tipo=error");
     exit();
 }
 

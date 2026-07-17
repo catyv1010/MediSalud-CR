@@ -23,6 +23,18 @@ function GenerarContrasena()
     return $contrasena;
 }
 
+// destruye la sesion, se usa al salir y despues de cambiar la contrasena
+function CerrarSesion()
+{
+    if (session_status() === PHP_SESSION_NONE)
+    {
+        session_start();
+    }
+
+    session_unset();
+    session_destroy();
+}
+
 // envia un correo html con phpmailer
 // si CORREO_ACTIVO esta en false lo escribe en correos.log para poder probar en local
 function EnviarCorreo($destino, $nombreDestino, $asunto, $cuerpoHtml)

@@ -3,7 +3,6 @@
 // Luis Andres Granados Gonzalez
 // Andres Rojas Quesada
 // Jose Alexis Sandi Guillen
-// Sebastian Solano Escalante
 // Maria Catalina Valverde Arroyo
 
 // punto de entrada: solo redirige a la vista principal

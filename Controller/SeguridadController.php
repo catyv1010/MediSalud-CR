@@ -1,6 +1,9 @@
 <?php
     // control de sesion, toda vista interna incluye este archivo primero
 
+    // zona horaria del proyecto, para que las fechas salgan con hora de costa rica
+    date_default_timezone_set('America/Costa_Rica');
+
     if (session_status() === PHP_SESSION_NONE)
     {
         session_start();

@@ -19,7 +19,7 @@ PintarHeader();
 
                     <?php PintarMensaje(); ?>
 
-                    <form action="../../Controller/InicioController.php" method="POST" id="form-cambiar">
+                    <form action="../../Controller/UsuariosController.php" method="POST" id="form-cambiar">
                         <div class="form-group">
                             <label for="contrasena_actual">Contraseña actual <span style="color:#c00;">*</span></label>
                             <input class="form-control" name="contrasena_actual" id="contrasena_actual" type="password" required autocomplete="off">

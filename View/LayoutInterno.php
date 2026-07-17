@@ -48,6 +48,7 @@ function PintarHeader()
         $enlaces .= '<a href="/MediSalud-CR/View/vAdmin/Reportes.php"><i class="fa fa-chart-bar"></i> Reportes</a>';
     }
 
+    $enlaces .= '<a href="/MediSalud-CR/View/vPanel/MiPerfil.php"><i class="fa fa-user"></i> Mi perfil</a>';
     $enlaces .= '<a href="/MediSalud-CR/View/vPanel/CambiarContrasena.php"><i class="fa fa-key"></i> Contraseña</a>';
 
     echo '

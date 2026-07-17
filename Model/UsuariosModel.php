@@ -145,6 +145,63 @@
         }
     }
 
+    // datos actuales del usuario, para precargar la pantalla de mi perfil
+    function ConsultarUsuarioModel($usuarioId)
+    {
+        try
+        {
+            $conn = OpenDB();
+
+            $sql = "CALL sp_consultar_usuario($usuarioId)";
+            $response = $conn -> query($sql);
+
+            $datos = null;
+            while($fila = $response -> fetch_assoc())
+            {
+                $datos = $fila;
+            }
+
+            CloseDB($conn);
+            return $datos;
+        }
+        catch(Exception $e)
+        {
+            AddError($e, 'ConsultarUsuarioModel');
+            return null;
+        }
+    }
+
+    // actualiza los datos personales desde la pantalla de mi perfil
+    function ActualizarPerfilModel($usuarioId, $cedula, $nombre, $correo, $telefono)
+    {
+        try
+        {
+            $conn = OpenDB();
+
+            $cedula   = $conn -> real_escape_string($cedula);
+            $nombre   = $conn -> real_escape_string($nombre);
+            $correo   = $conn -> real_escape_string($correo);
+            $telefono = $conn -> real_escape_string($telefono);
+
+            $sql = "CALL sp_actualizar_perfil($usuarioId,'$cedula','$nombre','$correo','$telefono')";
+            $response = $conn -> query($sql);
+
+            $datos = null;
+            while($fila = $response -> fetch_assoc())
+            {
+                $datos = $fila;
+            }
+
+            CloseDB($conn);
+            return ($datos != null && $datos['resultado'] == 'OK');
+        }
+        catch(Exception $e)
+        {
+            AddError($e, 'ActualizarPerfilModel');
+            return false;
+        }
+    }
+
     function ObtenerPacienteModel($usuarioId)
     {
         try
