@@ -124,7 +124,11 @@ INSERT INTO usuarios (cedula, correo, contrasena, nombre, telefono, rol) VALUES
   ('303330333', 'jrojas@medisaludcr.example',  'Medico123*',   'Dr. Jorge Rojas Solano',    '2222-0003', 'medico'),
   ('404440444', 'mvargas@medisaludcr.example', 'Medico123*',   'Dra. Maria Vargas Leon',    '2222-0004', 'medico'),
   ('505550555', 'cvalverde21@gmail.com',       'Paciente123*', 'Ana Mora Jimenez',          '8888-0005', 'paciente'),
-  ('606660666', 'carlos.soto@correo.example',  'Paciente123*', 'Carlos Soto Ramirez',       '8888-0006', 'paciente');
+  ('606660666', 'carlos.soto@correo.example',  'Paciente123*', 'Carlos Soto Ramirez',       '8888-0006', 'paciente'),
+  ('707770777', 'srodriguez@medisaludcr.example', 'Medico123*', 'Dra. Silvia Rodriguez Campos', '2222-0007', 'medico'),
+  ('808880888', 'mjimenez@medisaludcr.example',   'Medico123*', 'Dr. Marco Jimenez Castro',     '2222-0008', 'medico'),
+  ('909990999', 'kchaves@medisaludcr.example',    'Medico123*', 'Dra. Karla Chaves Solis',      '2222-0009', 'medico'),
+  ('101010101', 'pherrera@medisaludcr.example',   'Medico123*', 'Dr. Pablo Herrera Vindas',     '2222-0010', 'medico');
 
 INSERT INTO pacientes (usuario_id, fecha_nacimiento, genero, direccion) VALUES
   (5, '1995-03-12', 'F', 'San Jose, Curridabat'),
@@ -133,7 +137,11 @@ INSERT INTO pacientes (usuario_id, fecha_nacimiento, genero, direccion) VALUES
 INSERT INTO medicos (usuario_id, especialidad_id, numero_colegiado, biografia) VALUES
   (2, 1, 'MED-1001', 'Medica general con 10 anos de experiencia en atencion primaria.'),
   (3, 2, 'MED-1002', 'Pediatra, especialista en desarrollo infantil.'),
-  (4, 4, 'MED-1003', 'Dermatologa, miembro del colegio de medicos desde 2012.');
+  (4, 4, 'MED-1003', 'Dermatologa, miembro del colegio de medicos desde 2012.'),
+  (7, 3, 'MED-1004', 'Ginecologa, con enfasis en salud preventiva de la mujer.'),
+  (8, 5, 'MED-1005', 'Ortopedista, especialista en lesiones deportivas.'),
+  (9, 6, 'MED-1006', 'Nutricionista clinica, planes alimentarios personalizados.'),
+  (10, 1, 'MED-1007', 'Medico general, atencion de adultos y adultos mayores.');
 
 INSERT INTO horarios_disponibles (medico_id, dia_semana, hora_inicio, hora_fin) VALUES
   (1, 'Lunes',     '08:00:00', '12:00:00'),
@@ -143,7 +151,15 @@ INSERT INTO horarios_disponibles (medico_id, dia_semana, hora_inicio, hora_fin) 
   (2, 'Jueves',    '13:00:00', '17:00:00'),
   (3, 'Lunes',     '13:00:00', '17:00:00'),
   (3, 'Miercoles', '13:00:00', '17:00:00'),
-  (3, 'Viernes',   '08:00:00', '12:00:00');
+  (3, 'Viernes',   '08:00:00', '12:00:00'),
+  (4, 'Martes',    '13:00:00', '17:00:00'),
+  (4, 'Jueves',    '08:00:00', '12:00:00'),
+  (5, 'Lunes',     '08:00:00', '12:00:00'),
+  (5, 'Viernes',   '13:00:00', '17:00:00'),
+  (6, 'Miercoles', '08:00:00', '12:00:00'),
+  (6, 'Sabado',    '08:00:00', '12:00:00'),
+  (7, 'Martes',    '08:00:00', '12:00:00'),
+  (7, 'Jueves',    '13:00:00', '17:00:00');
 
 -- unas citas de ejemplo para que los paneles no salgan vacios
 INSERT INTO citas (paciente_id, medico_id, fecha, hora, estado_id, motivo) VALUES
