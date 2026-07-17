@@ -1,59 +1,11 @@
 <?php
+include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Controller/CatalogosController.php';
+
 // pagina de especialidades
 $titulo_pagina = "Especialidades - MediSalud CR";
 
 // lista de prueba, despues la cargamos desde la base
-$especialidades = [
-    [
-        "nombre" => "Medicina General",
-        "ancla" => "esp-medicina-general",
-        "descripcion" => "Atención integral, consulta de primer contacto, controles preventivos y referencia a especialidades.",
-        "icono" => "flaticon-stethoscope",
-        "color" => "#244cb6"
-    ],
-    [
-        "nombre" => "Cardiología",
-        "ancla" => "esp-cardiologia",
-        "descripcion" => "Diagnóstico y tratamiento de enfermedades del corazón y el sistema circulatorio.",
-        "icono" => "flaticon-heart",
-        "color" => "#c00000"
-    ],
-    [
-        "nombre" => "Pediatría",
-        "ancla" => "esp-pediatria",
-        "descripcion" => "Atención médica especializada para bebés, niños y adolescentes hasta los 18 años.",
-        "icono" => "flaticon-baby",
-        "color" => "#2e75b6"
-    ],
-    [
-        "nombre" => "Dermatología",
-        "ancla" => "esp-dermatologia",
-        "descripcion" => "Cuidado de la piel, cabello y uñas: control de lunares, acné, alergias y procedimientos estéticos básicos.",
-        "icono" => "flaticon-doctor",
-        "color" => "#70ad47"
-    ],
-    [
-        "nombre" => "Ginecología",
-        "ancla" => "esp-ginecologia",
-        "descripcion" => "Salud de la mujer en todas las etapas: controles, planificación familiar y seguimiento.",
-        "icono" => "flaticon-doctor-2",
-        "color" => "#9b59b6"
-    ],
-    [
-        "nombre" => "Ortopedia",
-        "ancla" => "esp-ortopedia",
-        "descripcion" => "Diagnóstico y tratamiento de lesiones del sistema músculo-esquelético: huesos, articulaciones y tendones.",
-        "icono" => "flaticon-bone",
-        "color" => "#e67e22"
-    ],
-    [
-        "nombre" => "Nutrición",
-        "ancla" => "esp-nutricion",
-        "descripcion" => "Acompañamiento nutricional, planes alimenticios personalizados y educación en hábitos saludables.",
-        "icono" => "flaticon-apple",
-        "color" => "#16a085"
-    ],
-];
+$especialidades = EspecialidadesAdminControl();
 
 include_once '../LayoutExterno.php';
 ImportCSS($titulo_pagina);
@@ -86,18 +38,38 @@ PintarHeader();
                 </div>
             </div>
 
+            <?php
+            $colores_especialidad = [
+                "Medicina General" => "#244cb6",
+                "Pediatria"        => "#2e75b6",
+                "Ginecologia"      => "#9b59b6",
+                "Dermatologia"     => "#70ad47",
+                "Ortopedia"        => "#e67e22",
+                "Nutricion"        => "#16a085",
+        ];
+        ?>
+
             <div class="row">
                 <?php foreach ($especialidades as $e): ?>
-                    <div class="col-lg-4 col-md-6 mb-4">
-                        <div style="background:#ffffff; padding:42px 30px; border-radius:14px; height:100%; border-top:5px solid <?= $e['color'] ?>; box-shadow:0 6px 24px rgba(31,44,77,0.08);">
-                            <div style="width:70px; height:70px; background:<?= $e['color'] ?>; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
-                                <i class="fa fa-plus-square" style="color:white; font-size:32px;"></i>
-                            </div>
-                            <h5 style="color:<?= $e['color'] ?>; font-size:23px; margin-bottom:12px;"><?= htmlspecialchars($e['nombre']) ?></h5>
-                            <p style="color:#666; line-height:1.7; margin-bottom:20px;"><?= htmlspecialchars($e['descripcion']) ?></p>
-                            <a href="Medicos.php#<?= $e['ancla'] ?>" style="color:<?= $e['color'] ?>; font-weight:bold; font-size:17px;">Ver médico &raquo;</a>
+                <?php
+                    $color = $colores_especialidad[$e['nombre']] ?? "#244cb6";
+                    $ancla = "esp-" . $e['id'];
+                ?>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div
+                        style="background:#ffffff; padding:42px 30px; border-radius:14px; height:100%; border-top:5px solid <?= $color ?>; box-shadow:0 6px 24px rgba(31,44,77,0.08);">
+                        <div
+                            style="width:70px; height:70px; background:<?= $color ?>; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
+                            <i class="fa fa-plus-square" style="color:white; font-size:32px;"></i>
                         </div>
+                        <h5 style="color:<?= $color ?>; font-size:23px; margin-bottom:12px;">
+                            <?= htmlspecialchars($e['nombre']) ?></h5>
+                        <p style="color:#666; line-height:1.7; margin-bottom:20px;">
+                            <?= htmlspecialchars($e['descripcion']) ?></p>
+                        <a href="Medicos.php#<?= $ancla ?>"
+                            style="color:<?= $color ?>; font-weight:bold; font-size:17px;">Ver médico &raquo;</a>
                     </div>
+                </div>
                 <?php endforeach; ?>
             </div>
         </div>

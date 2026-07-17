@@ -205,6 +205,23 @@ function MedicosAdminControl()
     return ListarMedicosAdminModel();
 }
 
+// funciones que usan las vistas publicas (antes de iniciar sesion)
+
+function EspecialidadesPublicoControl()
+{
+    return ListarEspecialidadesModel();
+}
+
+function MedicosPublicoControl()
+{
+    return ListarMedicosPublicoModel();
+}
+
+function MedicoPublicoControl($medicoId)
+{
+    return ObtenerMedicoPublicoModel($medicoId);
+}
+
 // busca un medico dentro de la lista (para la pantalla de editar)
 function MedicoAdminControl($medicoId)
 {

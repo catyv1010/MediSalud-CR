@@ -324,6 +324,33 @@ BEGIN
 END //
 
 
+-- medicos activos con su especialidad (pagina publica de medicos)
+CREATE PROCEDURE sp_listar_medicos_publico()
+BEGIN
+  SELECT m.id, u.nombre, m.biografia, m.numero_colegiado,
+         m.especialidad_id, e.nombre AS especialidad
+  FROM medicos m
+  INNER JOIN usuarios u ON u.id = m.usuario_id
+  INNER JOIN especialidades e ON e.id = m.especialidad_id
+  WHERE u.activo = TRUE
+  ORDER BY e.nombre, u.nombre;
+END //
+
+
+-- un medico por id, con su especialidad (detalle publico)
+CREATE PROCEDURE sp_obtener_medico_publico(
+  IN p_medico_id INT
+)
+BEGIN
+  SELECT m.id, u.nombre, m.biografia, m.numero_colegiado,
+         m.especialidad_id, e.nombre AS especialidad
+  FROM medicos m
+  INNER JOIN usuarios u ON u.id = m.usuario_id
+  INNER JOIN especialidades e ON e.id = m.especialidad_id
+  WHERE m.id = p_medico_id;
+END //
+
+
 -- perfil de paciente de un usuario (se guarda en la sesion)
 CREATE PROCEDURE sp_obtener_paciente(
   IN p_usuario_id INT
