@@ -42,6 +42,9 @@ if (isset($_POST["btnLogin"])) {
     $_SESSION['correo']     = $usuario['correo'];
     $_SESSION['rol']        = $usuario['rol'];
 
+    // si entro con una contrasena temporal se le obliga a cambiarla
+    $_SESSION['contrasena_temporal'] = ($usuario['contrasena_temporal'] == 1);
+
     // datos extra segun el rol, se ocupan en el modulo de citas
     if ($usuario['rol'] == 'paciente') {
         $perfil = ObtenerPacienteModel($usuario['id']);
@@ -51,6 +54,11 @@ if (isset($_POST["btnLogin"])) {
         $perfil = ObtenerMedicoModel($usuario['id']);
         $_SESSION['medico_id']    = ($perfil != null) ? $perfil['medico_id'] : null;
         $_SESSION['especialidad'] = ($perfil != null) ? $perfil['especialidad'] : '';
+    }
+
+    if ($_SESSION['contrasena_temporal']) {
+        header("Location: ../View/vPanel/CambiarContrasena.php?msj=" . urlencode("Ingresó con una contraseña temporal. Debe cambiarla para continuar.") . "&tipo=error");
+        exit();
     }
 
     header("Location: " . RutaPanel($usuario['rol']) . "?msj=" . urlencode("Bienvenido(a), " . $usuario['nombre'] . ".") . "&tipo=ok");

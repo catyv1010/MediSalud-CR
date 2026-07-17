@@ -25,12 +25,12 @@ PintarHeader();
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <h3 style="color:#244cb6; margin-bottom:25px;">¿Quiénes somos?</h3>
-                    <p style="color:#555; line-height:1.8;">
+                    <p style="color:#555; line-height:1.8; text-align:justify;">
                         La <strong>Clínica MediSalud CR</strong> es una clínica privada ubicada en
                         San José, Costa Rica. Atiende pacientes en consulta ambulatoria con
                         agendamiento de citas a través del sistema web.
                     </p>
-                    <p style="color:#555; line-height:1.8;">
+                    <p style="color:#555; line-height:1.8; text-align:justify;">
                         La idea de tener el sistema en línea es que los pacientes puedan reservar
                         sus citas sin tener que llamar por teléfono ni ir hasta la clínica, a
                         cualquier hora del día.
@@ -57,7 +57,7 @@ PintarHeader();
                             <i class="fa fa-bullseye" style="color:white; font-size:32px;"></i>
                         </div>
                         <h4 style="color:#244cb6; font-size:26px; margin-bottom:14px;">Misión</h4>
-                        <p style="color:#666; line-height:1.7;">
+                        <p style="color:#666; line-height:1.7; text-align:justify;">
                             Brindar atención médica oportuna y de calidad mediante el uso de tecnología
                             que facilite el acceso a citas, reduzca los tiempos de espera y mejore la
                             experiencia tanto del paciente como del personal de salud.
@@ -70,7 +70,7 @@ PintarHeader();
                             <i class="fa fa-eye" style="color:white; font-size:32px;"></i>
                         </div>
                         <h4 style="color:#2e75b6; font-size:26px; margin-bottom:14px;">Visión</h4>
-                        <p style="color:#666; line-height:1.7;">
+                        <p style="color:#666; line-height:1.7; text-align:justify;">
                             Consolidarnos como una clínica de referencia en Costa Rica por la calidad
                             del servicio y la innovación tecnológica, integrando especialidades, expediente
                             digital y atención centrada en el paciente.
@@ -83,7 +83,7 @@ PintarHeader();
                             <i class="fa fa-heart" style="color:white; font-size:32px;"></i>
                         </div>
                         <h4 style="color:#70ad47; font-size:26px; margin-bottom:14px;">Valores</h4>
-                        <p style="color:#666; line-height:1.7;">
+                        <p style="color:#666; line-height:1.7; text-align:justify;">
                             Compromiso con el paciente, calidad humana, respeto, confidencialidad de la
                             información clínica, trabajo en equipo y mejora continua de los procesos
                             internos.

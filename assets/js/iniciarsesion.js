@@ -8,7 +8,7 @@ $(function () {
             contrasena: { required: true }
         },
         messages: {
-            cedula: { required: "Ingrese su cédula o correo electrónico" },
+            cedula: { required: "Ingrese su cédula" },
             contrasena: { required: "Ingrese su contraseña" }
         },
         errorElement: "div",

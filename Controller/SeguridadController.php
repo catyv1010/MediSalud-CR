@@ -33,6 +33,14 @@
             exit();
         }
 
+        // si anda con contrasena temporal, solo puede estar en la pantalla de cambiarla
+        $pagina = basename($_SERVER['PHP_SELF']);
+        if (!empty($_SESSION['contrasena_temporal']) && $pagina != 'CambiarContrasena.php' && $pagina != 'UsuariosController.php')
+        {
+            header("Location: /MediSalud-CR/View/vPanel/CambiarContrasena.php?msj=" . urlencode("Debe cambiar su contraseña temporal antes de continuar.") . "&tipo=error");
+            exit();
+        }
+
         if (count($rolesPermitidos) > 0 && !in_array($_SESSION['rol'], $rolesPermitidos))
         {
             header("Location: " . RutaPanel($_SESSION['rol']) . "?msj=" . urlencode("No tiene permisos para entrar a esa página.") . "&tipo=error");

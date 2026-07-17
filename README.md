@@ -16,13 +16,13 @@ SC-502 Ambiente Web Cliente Servidor - Grupo 8
 
 ## Usuarios de prueba
 
-| Rol | Correo | Contraseña |
+| Rol | Cédula | Contraseña |
 | --- | --- | --- |
-| Administrador | admin@medisaludcr.example | Admin123* |
-| Médico | lgarcia@medisaludcr.example | Medico123* |
-| Paciente | ana.mora@correo.example | Paciente123* |
+| Administrador | 101110111 | Admin123* |
+| Médico | 202220222 | Medico123* |
+| Paciente | 505550555 | Paciente123* |
 
-También se puede iniciar sesión con la cédula en lugar del correo.
+El inicio de sesión es únicamente con la cédula. El correo del usuario se usa para las notificaciones y para recuperar el acceso.
 
 ## Correos
 

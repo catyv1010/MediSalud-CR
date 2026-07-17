@@ -17,6 +17,7 @@ CREATE TABLE usuarios (
   cedula          VARCHAR(20)  NOT NULL UNIQUE,
   correo          VARCHAR(150) NOT NULL UNIQUE,
   contrasena      VARCHAR(20)  NOT NULL,
+  contrasena_temporal BOOLEAN  NOT NULL DEFAULT FALSE,
   nombre          VARCHAR(150) NOT NULL,
   telefono        VARCHAR(20),
   rol             ENUM('paciente','medico','administrador') NOT NULL,
@@ -122,7 +123,7 @@ INSERT INTO usuarios (cedula, correo, contrasena, nombre, telefono, rol) VALUES
   ('202220222', 'lgarcia@medisaludcr.example', 'Medico123*',   'Dra. Laura Garcia Mora',    '2222-0002', 'medico'),
   ('303330333', 'jrojas@medisaludcr.example',  'Medico123*',   'Dr. Jorge Rojas Solano',    '2222-0003', 'medico'),
   ('404440444', 'mvargas@medisaludcr.example', 'Medico123*',   'Dra. Maria Vargas Leon',    '2222-0004', 'medico'),
-  ('505550555', 'ana.mora@correo.example',     'Paciente123*', 'Ana Mora Jimenez',          '8888-0005', 'paciente'),
+  ('505550555', 'cvalverde21@gmail.com',       'Paciente123*', 'Ana Mora Jimenez',          '8888-0005', 'paciente'),
   ('606660666', 'carlos.soto@correo.example',  'Paciente123*', 'Carlos Soto Ramirez',       '8888-0006', 'paciente');
 
 INSERT INTO pacientes (usuario_id, fecha_nacimiento, genero, direccion) VALUES
@@ -167,13 +168,13 @@ DELIMITER //
 -- verifica las credenciales y devuelve el usuario si es valido
 -- acepta cedula o correo como identificacion
 CREATE PROCEDURE sp_iniciar_sesion(
-  IN p_identificacion VARCHAR(150),
-  IN p_contrasena     VARCHAR(20)
+  IN p_cedula     VARCHAR(20),
+  IN p_contrasena VARCHAR(20)
 )
 BEGIN
-  SELECT id, cedula, correo, nombre, rol
+  SELECT id, cedula, correo, nombre, rol, contrasena_temporal
   FROM usuarios
-  WHERE (cedula = p_identificacion OR correo = p_identificacion)
+  WHERE cedula = p_cedula
     AND contrasena = p_contrasena
     AND activo = TRUE;
 END //
@@ -229,12 +230,16 @@ END //
 
 
 -- le pone al usuario la contrasena temporal que se le envia por correo
+-- y enciende la bandera para obligarlo a cambiarla al entrar
 CREATE PROCEDURE sp_actualizar_contrasena(
   IN p_usuario_id INT,
   IN p_contrasena VARCHAR(20)
 )
 BEGIN
-  UPDATE usuarios SET contrasena = p_contrasena WHERE id = p_usuario_id;
+  UPDATE usuarios
+  SET contrasena = p_contrasena,
+      contrasena_temporal = TRUE
+  WHERE id = p_usuario_id;
   SELECT 'OK' AS resultado;
 END //
 
@@ -255,7 +260,10 @@ BEGIN
   IF v_existe = 0 THEN
     SELECT 'ACTUAL_INCORRECTA' AS resultado;
   ELSE
-    UPDATE usuarios SET contrasena = p_nueva WHERE id = p_usuario_id;
+    UPDATE usuarios
+    SET contrasena = p_nueva,
+        contrasena_temporal = FALSE
+    WHERE id = p_usuario_id;
     SELECT 'OK' AS resultado;
   END IF;
 END //

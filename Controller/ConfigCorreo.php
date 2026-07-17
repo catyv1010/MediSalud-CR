@@ -15,9 +15,9 @@
 
     define('SMTP_HOST',       'smtp.gmail.com');
     define('SMTP_PUERTO',     587);
-    define('SMTP_USUARIO',    'cvalverde21@gmail.com');
+    define('SMTP_USUARIO',    'irenea2130@gmail.com');
 
-    define('CORREO_REMITENTE', 'cvalverde21@gmail.com');
+    define('CORREO_REMITENTE', 'irenea2130@gmail.com');
     define('NOMBRE_REMITENTE', 'Clinica MediSalud CR');
 
     // base de los enlaces que van dentro de los correos (apache en el 81)

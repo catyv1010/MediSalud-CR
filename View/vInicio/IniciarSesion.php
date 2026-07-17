@@ -35,8 +35,8 @@ PintarHeader();
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="cedula">Correo electrónico o cédula <span style="color:#c00;">*</span></label>
-                                        <input class="form-control" name="cedula" id="cedula" type="text" placeholder="Ingrese su correo o su cédula" maxlength="150" autocomplete="off">
+                                        <label for="cedula">Cédula <span style="color:#c00;">*</span></label>
+                                        <input class="form-control" name="cedula" id="cedula" type="text" placeholder="Ingrese su cédula" maxlength="20" autocomplete="off">
                                     </div>
                                 </div>
                                 <div class="col-12">
