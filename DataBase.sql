@@ -166,7 +166,7 @@ INSERT INTO citas (paciente_id, medico_id, fecha, hora, estado_id, motivo) VALUE
 DELIMITER //
 
 -- verifica las credenciales y devuelve el usuario si es valido
--- acepta cedula o correo como identificacion
+-- el inicio de sesion es unicamente con la cedula
 CREATE PROCEDURE sp_iniciar_sesion(
   IN p_cedula     VARCHAR(20),
   IN p_contrasena VARCHAR(20)
