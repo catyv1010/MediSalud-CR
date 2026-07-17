@@ -40,7 +40,7 @@ PintarHeader();
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for="nombre">Nombre completo <span style="color:#c00;">*</span></label>
-                                        <input class="form-control" name="nombre" id="nombre" type="text" placeholder="Nombre y apellidos" required maxlength="150">
+                                        <input class="form-control" name="nombre" id="nombre" type="text" placeholder="Se completa automáticamente al ingresar la cédula" required maxlength="150">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -108,5 +108,5 @@ PintarHeader();
 
 <?php
 PintarFooter();
-ImportJS(array('../../assets/js/registrarusuarios.js'));
+ImportJS(array('../../assets/js/nombresapi.js', '../../assets/js/registrarusuarios.js'));
 ?>

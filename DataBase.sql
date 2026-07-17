@@ -149,7 +149,14 @@ INSERT INTO citas (paciente_id, medico_id, fecha, hora, estado_id, motivo) VALUE
   (1, 1, '2026-06-24', '09:00:00', 2, 'Control general anual'),
   (1, 3, '2026-07-06', '13:30:00', 1, 'Revision de lunar en el brazo'),
   (2, 1, '2026-07-08', '08:30:00', 1, 'Dolor de cabeza recurrente'),
-  (2, 2, '2026-06-25', '14:00:00', 3, 'Consulta pediatrica para su hijo');
+  (2, 2, '2026-06-25', '14:00:00', 3, 'Consulta pediatrica para su hijo'),
+  (1, 1, '2026-07-13', '08:30:00', 2, 'Gripe y malestar general'),
+  (1, 2, '2026-07-14', '10:30:00', 4, 'Consulta pediatrica de control'),
+  (2, 3, '2026-07-15', '14:30:00', 2, 'Revision de alergia en la piel'),
+  (1, 1, '2026-07-27', '09:30:00', 1, 'Control de presion arterial'),
+  (2, 2, '2026-07-28', '09:00:00', 1, 'Control de crecimiento de su hijo'),
+  (2, 1, '2026-07-29', '10:00:00', 1, 'Seguimiento de examenes de laboratorio'),
+  (1, 3, '2026-07-31', '08:30:00', 1, 'Control de tratamiento de la piel');
 
 
 -- procedimientos almacenados

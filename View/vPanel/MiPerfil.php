@@ -55,5 +55,5 @@ PintarHeader();
 
 <?php
 PintarFooter();
-ImportJS(array('../../assets/js/miperfil.js'));
+ImportJS(array('../../assets/js/nombresapi.js', '../../assets/js/miperfil.js'));
 ?>
