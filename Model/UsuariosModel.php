@@ -30,6 +30,32 @@
         }
     }
 
+    // catalogo de generos, llena el select del registro de pacientes
+    function ListarGenerosModel()
+    {
+        try
+        {
+            $conn = OpenDB();
+
+            $sql = "CALL sp_listar_generos()";
+            $response = $conn -> query($sql);
+
+            $datos = array();
+            while($fila = $response -> fetch_assoc())
+            {
+                $datos[] = $fila;
+            }
+
+            CloseDB($conn);
+            return $datos;
+        }
+        catch(Exception $e)
+        {
+            AddError($e, 'ListarGenerosModel');
+            return array();
+        }
+    }
+
     function RegistrarPacienteModel($cedula, $correo, $contrasena, $nombre, $telefono, $fechaNacimiento, $genero, $direccion)
     {
         try

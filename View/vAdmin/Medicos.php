@@ -101,6 +101,7 @@ PintarHeader();
                                                 <form action="../../Controller/CatalogosController.php" method="POST" style="display:inline;">
                                                     <input type="hidden" name="usuario_id" value="<?php echo $medico['usuario_id']; ?>">
                                                     <input type="hidden" name="activo" value="<?php echo $medico['activo'] ? 0 : 1; ?>">
+                                                    <input type="hidden" name="origen" value="medicos">
                                                     <button type="submit" name="btnEstadoUsuario" class="btn-medisalud-sec">
                                                         <?php echo $medico['activo'] ? 'Desactivar' : 'Activar'; ?>
                                                     </button>

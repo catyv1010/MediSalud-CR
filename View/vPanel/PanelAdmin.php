@@ -78,7 +78,7 @@ PintarHeader();
                                             <td><?php echo htmlspecialchars($cita['paciente']); ?></td>
                                             <td><?php echo htmlspecialchars($cita['medico']); ?></td>
                                             <td><?php echo htmlspecialchars($cita['especialidad']); ?></td>
-                                            <td><span class="badge-estado <?php echo ClaseEstado($cita['estado']); ?>">
+                                            <td><span class="badge-estado <?php echo htmlspecialchars($cita['clase_estado']); ?>">
                                                 <?php echo htmlspecialchars($cita['estado']); ?></span></td>
                                         </tr>
                                     <?php } ?>

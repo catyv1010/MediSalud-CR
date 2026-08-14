@@ -1,5 +1,10 @@
 <?php
 // vista de registro de pacientes
+include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Controller/CatalogosController.php';
+
+// el select de genero se llena con el catalogo de la base
+$generos = GenerosControl();
+
 $titulo_pagina = "Crear cuenta - MediSalud CR";
 include_once '../LayoutExterno.php';
 ImportCSS($titulo_pagina);
@@ -66,9 +71,11 @@ PintarHeader();
                                         <label for="genero">Género</label>
                                         <select class="form-control" name="genero" id="genero">
                                             <option value="">Seleccione</option>
-                                            <option value="F">Femenino</option>
-                                            <option value="M">Masculino</option>
-                                            <option value="Otro">Otro</option>
+                                            <?php foreach ($generos as $genero) { ?>
+                                                <option value="<?php echo htmlspecialchars($genero['codigo']); ?>">
+                                                    <?php echo htmlspecialchars($genero['nombre']); ?>
+                                                </option>
+                                            <?php } ?>
                                         </select>
                                     </div>
                                 </div>

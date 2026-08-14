@@ -16,6 +16,7 @@ function ImportCSS($titulo = 'MediSalud CR')
     <link rel="shortcut icon" type="image/x-icon" href="../../assets/img/favicon.ico">
     <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../assets/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="../../assets/css/themify-icons.css">
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="../../assets/css/medisalud.css">
 </head>
@@ -120,11 +121,5 @@ function PintarMensaje()
     }
 }
 
-// clase css del badge segun el estado de la cita
-function ClaseEstado($estado)
-{
-    if ($estado === 'Agendada')  return 'estado-agendada';
-    if ($estado === 'Atendida')  return 'estado-atendida';
-    if ($estado === 'Cancelada') return 'estado-cancelada';
-    return 'estado-no-asistio';
-}
+// nota: la clase css del badge de cada estado ya no se decide aqui,
+// viene de la columna clase_css del catalogo estados_cita (campo clase_estado)

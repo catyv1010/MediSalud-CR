@@ -59,7 +59,7 @@ PintarHeader();
                                             <td><?php echo htmlspecialchars($cita['cedula_paciente']); ?></td>
                                             <td><?php echo htmlspecialchars($cita['telefono_paciente'] ?? ''); ?></td>
                                             <td><?php echo htmlspecialchars($cita['motivo'] ?? ''); ?></td>
-                                            <td><span class="badge-estado <?php echo ClaseEstado($cita['estado']); ?>">
+                                            <td><span class="badge-estado <?php echo htmlspecialchars($cita['clase_estado']); ?>">
                                                 <?php echo htmlspecialchars($cita['estado']); ?></span></td>
                                         </tr>
                                     <?php } ?>

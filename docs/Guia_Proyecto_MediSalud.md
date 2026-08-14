@@ -5,7 +5,7 @@
 **Curso:** SC-502 Ambiente Web Cliente/Servidor — Universidad Fidélitas — Prof. Eduardo José Calvo Castillo
 **Grupo 8:** Luis Andrés Granados González, Andrés Rojas Quesada, José Alexis Sandi Guillén, María Catalina Valverde Arroyo
 **Proyecto:** Sistema web de gestión de citas médicas para la Clínica MediSalud CR (clínica privada ficticia)
-**Última actualización:** 11 de julio de 2026 (alineado a la clase de semana 9)
+**Última actualización:** 13 de agosto de 2026 (revisión final antes de la defensa)
 
 ---
 
@@ -27,7 +27,7 @@ Una aplicación web donde los pacientes agendan citas médicas en línea viendo 
 | jQuery Validate | Reglas de validación en el navegador (un archivo JS por formulario) |
 | AJAX + JSON | Agendamiento en cascada: especialidad → médicos → horas libres, sin recargar la página |
 | PHP | Toda la lógica del servidor: controladores y modelos |
-| MySQL (MariaDB) | Base de datos `medisalud_cr`: 8 tablas y 33 procedimientos almacenados |
+| MySQL (MariaDB) | Base de datos `medisalud_cr`: 10 tablas y 42 procedimientos almacenados |
 | PHPMailer | Envío de correos por SMTP de Gmail |
 | Git / GitHub | Control de versiones del código |
 | XAMPP | Servidor local: Apache en puerto **81**, MySQL en puerto **3307** |
@@ -102,19 +102,21 @@ MediSalud-CR/
 
 ---
 
-## 5. Base de datos: `medisalud_cr` (8 tablas, 33 procedimientos)
+## 5. Base de datos: `medisalud_cr` (10 tablas, 42 procedimientos)
 
 ### Tablas y para qué sirve cada una
 
 | Tabla | Para qué sirve |
 |---|---|
 | `usuarios` | Tabla base de autenticación: id (PK), cédula (UNIQUE), correo (UNIQUE), contraseña, nombre, teléfono, rol, activo |
-| `pacientes` | Perfil extra del rol paciente: fecha de nacimiento, género, dirección (FK a usuarios) |
-| `especialidades` | Catálogo: nombre y descripción |
+| `pacientes` | Perfil extra del rol paciente: fecha de nacimiento, género (FK), dirección (FK a usuarios) |
+| `especialidades` | Catálogo: nombre, descripción, ícono y color con que se muestra en la web |
 | `medicos` | Perfil extra del rol médico: especialidad (FK), número de colegiado, biografía (FK a usuarios) |
-| `horarios_disponibles` | Franjas de atención de cada médico: día de la semana, hora inicio, hora fin |
+| `horarios_disponibles` | Franjas de atención de cada médico: día de la semana (FK), hora inicio, hora fin |
 | `citas` | La tabla central: paciente (FK), médico (FK), fecha, hora, estado (FK), motivo |
-| `estados_cita` | Catálogo: Agendada, Atendida, Cancelada, No asistió |
+| `estados_cita` | Catálogo: Agendada, Atendida, Cancelada, No asistió + su clase CSS y si es seleccionable |
+| `generos` | Catálogo del select de género del registro (Femenino, Masculino, Otro) |
+| `dias_semana` | Catálogo del select de días de las franjas de atención, con su orden |
 | `errores` | Bitácora: cada excepción capturada se registra con mensaje, acción y usuario |
 
 ### Relaciones (para el diagrama ER)
@@ -123,6 +125,34 @@ MediSalud-CR/
 - `especialidades` 1—N `medicos`
 - `medicos` 1—N `horarios_disponibles`
 - `citas` N—1 con `pacientes`, `medicos` y `estados_cita`
+- `pacientes` N—1 con `generos`
+- `horarios_disponibles` N—1 con `dias_semana`
+
+### Los catálogos: por qué no hay valores quemados en las vistas
+
+Todo lo que llena un `<select>` sale de una tabla de la base, nunca de una lista escrita
+dentro del HTML. Cuatro catálogos alimentan las pantallas:
+
+| Catálogo | Llena el select de | Procedimiento |
+|---|---|---|
+| `generos` | Género, en el registro de pacientes | `sp_listar_generos` |
+| `dias_semana` | Día, en las franjas de atención del médico | `sp_listar_dias` |
+| `estados_cita` | Estado nuevo de una cita (médico y administrador) | `sp_listar_estados_seleccionables` |
+| `especialidades` | Especialidad, en agendar cita y en el registro de médicos | `sp_listar_especialidades` |
+
+**Por qué importa:** si mañana la clínica agrega un estado o cambia una etiqueta,
+se toca **una fila de la base** y cambia en todas las pantallas a la vez. No hay que
+buscar el valor repetido en varios archivos ni arriesgarse a que una pantalla quede
+desactualizada respecto a otra.
+
+Dos detalles del diseño que vale la pena poder explicar:
+
+- `estados_cita.seleccionable` marca cuáles estados puede escoger una persona. *Agendada*
+  está en `FALSE` porque es el estado con que nace la cita: nadie la puede devolver a ese
+  estado desde la pantalla. El controlador arma la lista de estados válidos leyendo ese
+  mismo catálogo, así que la validación del servidor y el select siempre coinciden.
+- `estados_cita.clase_css` guarda la clase con que se pinta el badge de color. La vista
+  solo imprime la clase que le llega de la base; no decide colores.
 
 ### Por qué las decisiones de diseño (preguntas típicas)
 
@@ -241,7 +271,7 @@ El login acepta **cédula O correo** en el mismo campo (el SP compara contra amb
 
 **¿Qué pasa si le mando el formulario sin llenar campos, saltándome el JavaScript?** El controlador repite las validaciones en PHP y la base tiene UNIQUE y NOT NULL. Tres capas.
 
-**¿Dónde está el SQL del sistema?** En la base de datos, dentro de los 33 procedimientos almacenados. En PHP solo hay `CALL sp_x(...)` — cero SQL concatenado, cero inyección.
+**¿Dónde está el SQL del sistema?** En la base de datos, dentro de los 42 procedimientos almacenados. En PHP solo hay `CALL sp_x(...)` — cero SQL concatenado, cero inyección.
 
 **¿Cómo funciona la sesión entre páginas?** PHP genera un PHPSESSID que viaja en cookie; los datos viven en el servidor. Cada archivo que use `$_SESSION` hace `session_start()` primero.
 

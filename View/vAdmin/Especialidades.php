@@ -7,6 +7,7 @@ ValidarSesion(array('administrador'));
 include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Controller/CatalogosController.php';
 
 $especialidades = EspecialidadesAdminControl();
+$iconos         = IconosControl();
 
 // si viene ?editar=id se precargan los datos en el formulario
 $editando = null;
@@ -49,6 +50,30 @@ PintarHeader();
                             <label for="descripcion">Descripción</label>
                             <textarea class="form-control" name="descripcion" id="descripcion" rows="3" maxlength="500"><?php echo ($editando != null) ? htmlspecialchars($editando['descripcion'] ?? '') : ''; ?></textarea>
                         </div>
+                        <!-- el icono y el color se guardan en la base y son los que se
+                             muestran en la pagina publica de especialidades -->
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="form-group">
+                                    <label for="icono">Ícono</label>
+                                    <select class="form-control" name="icono" id="icono">
+                                        <?php foreach ($iconos as $clase => $etiqueta) { ?>
+                                            <option value="<?php echo htmlspecialchars($clase); ?>"
+                                                <?php echo ($editando != null && $editando['icono'] == $clase) ? 'selected' : ''; ?>>
+                                                <?php echo htmlspecialchars($etiqueta); ?>
+                                            </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="form-group">
+                                    <label for="color">Color</label>
+                                    <input class="form-control" name="color" id="color" type="color"
+                                        value="<?php echo ($editando != null) ? htmlspecialchars($editando['color']) : '#244cb6'; ?>">
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-group text-center">
                             <?php if ($editando == null) { ?>
                                 <button type="submit" name="btnCrearEspecialidad" class="btn-medisalud">Guardar</button>
@@ -70,6 +95,7 @@ PintarHeader();
                             <table class="table tabla-citas">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th>Nombre</th>
                                         <th>Descripción</th>
                                         <th></th>
@@ -78,6 +104,11 @@ PintarHeader();
                                 <tbody>
                                     <?php foreach ($especialidades as $esp) { ?>
                                         <tr>
+                                            <td>
+                                                <span class="punto-especialidad" style="background:<?php echo htmlspecialchars($esp['color']); ?>;">
+                                                    <i class="<?php echo htmlspecialchars($esp['icono']); ?>"></i>
+                                                </span>
+                                            </td>
                                             <td><?php echo htmlspecialchars($esp['nombre']); ?></td>
                                             <td><?php echo htmlspecialchars($esp['descripcion'] ?? ''); ?></td>
                                             <td style="white-space:nowrap;">

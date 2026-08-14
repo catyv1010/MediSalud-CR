@@ -53,7 +53,7 @@ PintarHeader();
                                     <td><?php echo htmlspecialchars($cita['medico']); ?></td>
                                     <td><?php echo htmlspecialchars($cita['especialidad']); ?></td>
                                     <td><?php echo htmlspecialchars($cita['motivo'] ?? ''); ?></td>
-                                    <td><span class="badge-estado <?php echo ClaseEstado($cita['estado']); ?>">
+                                    <td><span class="badge-estado <?php echo htmlspecialchars($cita['clase_estado']); ?>">
                                         <?php echo htmlspecialchars($cita['estado']); ?></span></td>
                                     <td>
                                         <?php if ($cita['estado'] === 'Agendada' && $cita['fecha'] >= date('Y-m-d')) { ?>

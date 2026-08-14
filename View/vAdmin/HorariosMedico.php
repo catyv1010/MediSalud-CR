@@ -8,6 +8,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Controller/CatalogosCont
 $medicoId = intval($_GET['medico'] ?? 0);
 $medico   = MedicoAdminControl($medicoId);
 $franjas  = FranjasAdminControl($medicoId);
+$dias     = DiasControl();
 
 $titulo_pagina = "Horarios del médico - MediSalud CR";
 include_once '../LayoutInterno.php';
@@ -43,13 +44,11 @@ PintarHeader();
                                 <label for="dia_semana">Día <span style="color:#c00;">*</span></label>
                                 <select class="form-control" name="dia_semana" id="dia_semana" required>
                                     <option value="">Seleccione</option>
-                                    <option value="Lunes">Lunes</option>
-                                    <option value="Martes">Martes</option>
-                                    <option value="Miercoles">Miércoles</option>
-                                    <option value="Jueves">Jueves</option>
-                                    <option value="Viernes">Viernes</option>
-                                    <option value="Sabado">Sábado</option>
-                                    <option value="Domingo">Domingo</option>
+                                    <?php foreach ($dias as $dia) { ?>
+                                        <option value="<?php echo htmlspecialchars($dia['nombre']); ?>">
+                                            <?php echo htmlspecialchars($dia['etiqueta']); ?>
+                                        </option>
+                                    <?php } ?>
                                 </select>
                             </div>
                             <div class="row">
@@ -91,7 +90,7 @@ PintarHeader();
                                     <tbody>
                                         <?php foreach ($franjas as $franja) { ?>
                                             <tr>
-                                                <td><?php echo htmlspecialchars($franja['dia_semana']); ?></td>
+                                                <td><?php echo htmlspecialchars($franja['dia_etiqueta']); ?></td>
                                                 <td><?php echo substr($franja['hora_inicio'], 0, 5); ?></td>
                                                 <td><?php echo substr($franja['hora_fin'], 0, 5); ?></td>
                                                 <td>

@@ -25,22 +25,34 @@ CREATE TABLE usuarios (
   fecha_registro  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
+-- catalogo de generos, para que el select del registro no venga quemado en la vista
+CREATE TABLE generos (
+  codigo VARCHAR(10) PRIMARY KEY,
+  nombre VARCHAR(30) NOT NULL,
+  orden  INT NOT NULL
+) ENGINE=InnoDB;
+
 -- datos extra del paciente
 CREATE TABLE pacientes (
   id               INT AUTO_INCREMENT PRIMARY KEY,
   usuario_id       INT NOT NULL UNIQUE,
   fecha_nacimiento DATE,
-  genero           ENUM('M','F','Otro'),
+  genero           VARCHAR(10),
   direccion        VARCHAR(255),
   FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
-    ON DELETE CASCADE ON UPDATE CASCADE
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (genero) REFERENCES generos(codigo)
+    ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 -- catalogo de especialidades de la clinica
+-- el icono y el color se guardan aqui para que las vistas publicas no los tengan quemados
 CREATE TABLE especialidades (
   id          INT AUTO_INCREMENT PRIMARY KEY,
   nombre      VARCHAR(100) NOT NULL UNIQUE,
-  descripcion TEXT
+  descripcion TEXT,
+  icono       VARCHAR(50) NOT NULL DEFAULT 'ti-heart',
+  color       VARCHAR(7)  NOT NULL DEFAULT '#244cb6'
 ) ENGINE=InnoDB;
 
 -- datos extra del medico
@@ -56,21 +68,34 @@ CREATE TABLE medicos (
     ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
+-- catalogo de dias de la semana, para que el select de horarios no venga quemado
+CREATE TABLE dias_semana (
+  nombre    VARCHAR(10) PRIMARY KEY,
+  etiqueta  VARCHAR(15) NOT NULL,
+  orden     INT NOT NULL
+) ENGINE=InnoDB;
+
 -- dias y horas en que atiende cada medico
 CREATE TABLE horarios_disponibles (
   id           INT AUTO_INCREMENT PRIMARY KEY,
   medico_id    INT NOT NULL,
-  dia_semana   ENUM('Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo') NOT NULL,
+  dia_semana   VARCHAR(10) NOT NULL,
   hora_inicio  TIME NOT NULL,
   hora_fin     TIME NOT NULL,
   FOREIGN KEY (medico_id) REFERENCES medicos(id)
-    ON DELETE CASCADE ON UPDATE CASCADE
+    ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (dia_semana) REFERENCES dias_semana(nombre)
+    ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 -- estados que puede tener una cita
+-- clase_css   : la clase con que se pinta el badge, asi la vista no decide colores
+-- seleccionable: 1 si el medico o el administrador puede escogerlo en el select
 CREATE TABLE estados_cita (
-  id     INT AUTO_INCREMENT PRIMARY KEY,
-  nombre VARCHAR(50) NOT NULL UNIQUE
+  id            INT AUTO_INCREMENT PRIMARY KEY,
+  nombre        VARCHAR(50) NOT NULL UNIQUE,
+  clase_css     VARCHAR(30) NOT NULL,
+  seleccionable BOOLEAN NOT NULL DEFAULT TRUE
 ) ENGINE=InnoDB;
 
 -- cada cita reservada
@@ -102,32 +127,48 @@ CREATE TABLE errores (
 
 
 -- catalogos
-INSERT INTO estados_cita (nombre) VALUES
-  ('Agendada'),
-  ('Atendida'),
-  ('Cancelada'),
-  ('No asistio');
+-- 'Agendada' no es seleccionable: es el estado con que nace la cita,
+-- nadie la puede devolver a ese estado desde la pantalla
+INSERT INTO estados_cita (nombre, clase_css, seleccionable) VALUES
+  ('Agendada',   'estado-agendada',   FALSE),
+  ('Atendida',   'estado-atendida',   TRUE),
+  ('Cancelada',  'estado-cancelada',  TRUE),
+  ('No asistió', 'estado-no-asistio', TRUE);
 
-INSERT INTO especialidades (nombre, descripcion) VALUES
-  ('Medicina General',  'Atencion medica general para todas las edades'),
-  ('Pediatria',         'Atencion medica de ninos y adolescentes'),
-  ('Ginecologia',       'Salud reproductiva femenina'),
-  ('Dermatologia',      'Diagnostico y tratamiento de enfermedades de la piel'),
-  ('Ortopedia',         'Diagnostico y tratamiento del sistema musculoesqueletico'),
-  ('Nutricion',         'Asesoria nutricional y planes alimentarios');
+INSERT INTO generos (codigo, nombre, orden) VALUES
+  ('F',    'Femenino',  1),
+  ('M',    'Masculino', 2),
+  ('Otro', 'Otro',      3);
+
+INSERT INTO dias_semana (nombre, etiqueta, orden) VALUES
+  ('Lunes',     'Lunes',     1),
+  ('Martes',    'Martes',    2),
+  ('Miercoles', 'Miércoles', 3),
+  ('Jueves',    'Jueves',    4),
+  ('Viernes',   'Viernes',   5),
+  ('Sabado',    'Sábado',    6),
+  ('Domingo',   'Domingo',   7);
+
+INSERT INTO especialidades (nombre, descripcion, icono, color) VALUES
+  ('Medicina General',  'Atención médica general para todas las edades',            'ti-heart',  '#244cb6'),
+  ('Pediatría',         'Atención médica de niños y adolescentes',                  'ti-shine',  '#2e75b6'),
+  ('Ginecología',       'Salud reproductiva femenina',                              'ti-user',   '#9b59b6'),
+  ('Dermatología',      'Diagnóstico y tratamiento de enfermedades de la piel',     'ti-eye',    '#70ad47'),
+  ('Ortopedia',         'Diagnóstico y tratamiento del sistema musculoesquelético', 'ti-pulse',  '#e67e22'),
+  ('Nutrición',         'Asesoría nutricional y planes alimentarios',               'ti-apple',  '#16a085');
 
 
 -- usuarios de prueba para la demo
 INSERT INTO usuarios (cedula, correo, contrasena, nombre, telefono, rol) VALUES
   ('101110111', 'admin@medisaludcr.example',   'Admin123*',    'Administrador del Sistema', '2222-0001', 'administrador'),
-  ('202220222', 'lgarcia@medisaludcr.example', 'Medico123*',   'Dra. Laura Garcia Mora',    '2222-0002', 'medico'),
+  ('202220222', 'lgarcia@medisaludcr.example', 'Medico123*',   'Dra. Laura García Mora',    '2222-0002', 'medico'),
   ('303330333', 'jrojas@medisaludcr.example',  'Medico123*',   'Dr. Jorge Rojas Solano',    '2222-0003', 'medico'),
-  ('404440444', 'mvargas@medisaludcr.example', 'Medico123*',   'Dra. Maria Vargas Leon',    '2222-0004', 'medico'),
-  ('505550555', 'cvalverde21@gmail.com',       'Paciente123*', 'Ana Mora Jimenez',          '8888-0005', 'paciente'),
-  ('606660666', 'carlos.soto@correo.example',  'Paciente123*', 'Carlos Soto Ramirez',       '8888-0006', 'paciente'),
-  ('707770777', 'srodriguez@medisaludcr.example', 'Medico123*', 'Dra. Silvia Rodriguez Campos', '2222-0007', 'medico'),
-  ('808880888', 'mjimenez@medisaludcr.example',   'Medico123*', 'Dr. Marco Jimenez Castro',     '2222-0008', 'medico'),
-  ('909990999', 'kchaves@medisaludcr.example',    'Medico123*', 'Dra. Karla Chaves Solis',      '2222-0009', 'medico'),
+  ('404440444', 'mvargas@medisaludcr.example', 'Medico123*',   'Dra. María Vargas León',    '2222-0004', 'medico'),
+  ('505550555', 'cvalverde21@gmail.com',       'Paciente123*', 'Ana Mora Jiménez',          '8888-0005', 'paciente'),
+  ('606660666', 'carlos.soto@correo.example',  'Paciente123*', 'Carlos Soto Ramírez',       '8888-0006', 'paciente'),
+  ('707770777', 'srodriguez@medisaludcr.example', 'Medico123*', 'Dra. Silvia Rodríguez Campos', '2222-0007', 'medico'),
+  ('808880888', 'mjimenez@medisaludcr.example',   'Medico123*', 'Dr. Marco Jiménez Castro',     '2222-0008', 'medico'),
+  ('909990999', 'kchaves@medisaludcr.example',    'Medico123*', 'Dra. Karla Chaves Solís',      '2222-0009', 'medico'),
   ('101010101', 'pherrera@medisaludcr.example',   'Medico123*', 'Dr. Pablo Herrera Vindas',     '2222-0010', 'medico');
 
 INSERT INTO pacientes (usuario_id, fecha_nacimiento, genero, direccion) VALUES
@@ -135,17 +176,26 @@ INSERT INTO pacientes (usuario_id, fecha_nacimiento, genero, direccion) VALUES
   (6, '1988-11-02', 'M', 'Heredia, San Pablo');
 
 INSERT INTO medicos (usuario_id, especialidad_id, numero_colegiado, biografia) VALUES
-  (2, 1, 'MED-1001', 'Medica general con 10 anos de experiencia en atencion primaria.'),
+  (2, 1, 'MED-1001', 'Médica general con 10 años de experiencia en atención primaria.'),
   (3, 2, 'MED-1002', 'Pediatra, especialista en desarrollo infantil.'),
-  (4, 4, 'MED-1003', 'Dermatologa, miembro del colegio de medicos desde 2012.'),
-  (7, 3, 'MED-1004', 'Ginecologa, con enfasis en salud preventiva de la mujer.'),
+  (4, 4, 'MED-1003', 'Dermatóloga, miembro del Colegio de Médicos desde 2012.'),
+  (7, 3, 'MED-1004', 'Ginecóloga, con énfasis en salud preventiva de la mujer.'),
   (8, 5, 'MED-1005', 'Ortopedista, especialista en lesiones deportivas.'),
-  (9, 6, 'MED-1006', 'Nutricionista clinica, planes alimentarios personalizados.'),
-  (10, 1, 'MED-1007', 'Medico general, atencion de adultos y adultos mayores.');
+  (9, 6, 'MED-1006', 'Nutricionista clínica, planes alimentarios personalizados.'),
+  (10, 1, 'MED-1007', 'Médico general, atención de adultos y adultos mayores.');
 
+-- la medica general (medico 1) atiende de lunes a viernes en jornada completa,
+-- los demas tienen dias fijos
 INSERT INTO horarios_disponibles (medico_id, dia_semana, hora_inicio, hora_fin) VALUES
   (1, 'Lunes',     '08:00:00', '12:00:00'),
+  (1, 'Lunes',     '13:00:00', '17:00:00'),
+  (1, 'Martes',    '08:00:00', '12:00:00'),
+  (1, 'Martes',    '13:00:00', '17:00:00'),
   (1, 'Miercoles', '08:00:00', '12:00:00'),
+  (1, 'Miercoles', '13:00:00', '17:00:00'),
+  (1, 'Jueves',    '08:00:00', '12:00:00'),
+  (1, 'Jueves',    '13:00:00', '17:00:00'),
+  (1, 'Viernes',   '08:00:00', '12:00:00'),
   (1, 'Viernes',   '13:00:00', '17:00:00'),
   (2, 'Martes',    '08:00:00', '12:00:00'),
   (2, 'Jueves',    '13:00:00', '17:00:00'),
@@ -161,19 +211,46 @@ INSERT INTO horarios_disponibles (medico_id, dia_semana, hora_inicio, hora_fin) 
   (7, 'Martes',    '08:00:00', '12:00:00'),
   (7, 'Jueves',    '13:00:00', '17:00:00');
 
--- unas citas de ejemplo para que los paneles no salgan vacios
+
+-- citas de ejemplo para que los paneles no salgan vacios
+-- las fechas se calculan a partir del dia en que se instala la base,
+-- asi el sistema siempre se ve con informacion al dia y no con fechas viejas
+-- (2=lunes ... 7=sabado en la funcion DAYOFWEEK de MySQL)
+SET @lunes     = DATE_ADD(CURDATE(), INTERVAL (2 - DAYOFWEEK(CURDATE()) + 7) % 7 DAY);
+SET @martes    = DATE_ADD(CURDATE(), INTERVAL (3 - DAYOFWEEK(CURDATE()) + 7) % 7 DAY);
+SET @miercoles = DATE_ADD(CURDATE(), INTERVAL (4 - DAYOFWEEK(CURDATE()) + 7) % 7 DAY);
+SET @jueves    = DATE_ADD(CURDATE(), INTERVAL (5 - DAYOFWEEK(CURDATE()) + 7) % 7 DAY);
+SET @viernes   = DATE_ADD(CURDATE(), INTERVAL (6 - DAYOFWEEK(CURDATE()) + 7) % 7 DAY);
+SET @sabado    = DATE_ADD(CURDATE(), INTERVAL (7 - DAYOFWEEK(CURDATE()) + 7) % 7 DAY);
+
+-- historial: citas ya pasadas, con sus distintos estados
 INSERT INTO citas (paciente_id, medico_id, fecha, hora, estado_id, motivo) VALUES
-  (1, 1, '2026-06-24', '09:00:00', 2, 'Control general anual'),
-  (1, 3, '2026-07-06', '13:30:00', 1, 'Revision de lunar en el brazo'),
-  (2, 1, '2026-07-08', '08:30:00', 1, 'Dolor de cabeza recurrente'),
-  (2, 2, '2026-06-25', '14:00:00', 3, 'Consulta pediatrica para su hijo'),
-  (1, 1, '2026-07-13', '08:30:00', 2, 'Gripe y malestar general'),
-  (1, 2, '2026-07-14', '10:30:00', 4, 'Consulta pediatrica de control'),
-  (2, 3, '2026-07-15', '14:30:00', 2, 'Revision de alergia en la piel'),
-  (1, 1, '2026-07-27', '09:30:00', 1, 'Control de presion arterial'),
-  (2, 2, '2026-07-28', '09:00:00', 1, 'Control de crecimiento de su hijo'),
-  (2, 1, '2026-07-29', '10:00:00', 1, 'Seguimiento de examenes de laboratorio'),
-  (1, 3, '2026-07-31', '08:30:00', 1, 'Control de tratamiento de la piel');
+  (1, 1, DATE_SUB(@lunes,     INTERVAL 14 DAY), '09:00:00', 2, 'Control general anual'),
+  (2, 2, DATE_SUB(@martes,    INTERVAL 14 DAY), '09:30:00', 2, 'Consulta pediátrica para su hijo'),
+  (1, 3, DATE_SUB(@miercoles, INTERVAL 14 DAY), '14:00:00', 4, 'Revisión de lunar en el brazo'),
+  (2, 1, DATE_SUB(@viernes,   INTERVAL 14 DAY), '14:30:00', 3, 'Dolor de cabeza recurrente'),
+  (1, 6, DATE_SUB(@sabado,    INTERVAL 14 DAY), '09:00:00', 2, 'Primera consulta de nutrición'),
+  (1, 1, DATE_SUB(@lunes,     INTERVAL 7 DAY),  '10:00:00', 2, 'Gripe y malestar general'),
+  (2, 4, DATE_SUB(@jueves,    INTERVAL 7 DAY),  '09:00:00', 2, 'Control ginecológico anual'),
+  (1, 2, DATE_SUB(@martes,    INTERVAL 7 DAY),  '10:30:00', 4, 'Consulta pediátrica de control');
+
+-- agenda de hoy de la medica general (solo si hoy es un dia habil)
+INSERT INTO citas (paciente_id, medico_id, fecha, hora, estado_id, motivo)
+SELECT 1, 1, CURDATE(), '08:30:00', 1, 'Control de presión arterial'
+WHERE DAYOFWEEK(CURDATE()) BETWEEN 2 AND 6;
+
+INSERT INTO citas (paciente_id, medico_id, fecha, hora, estado_id, motivo)
+SELECT 2, 1, CURDATE(), '10:00:00', 1, 'Seguimiento de exámenes de laboratorio'
+WHERE DAYOFWEEK(CURDATE()) BETWEEN 2 AND 6;
+
+-- proximas citas agendadas, para el panel del paciente y el calendario
+INSERT INTO citas (paciente_id, medico_id, fecha, hora, estado_id, motivo) VALUES
+  (1, 3, DATE_ADD(@miercoles, INTERVAL 7 DAY),  '13:30:00', 1, 'Control de tratamiento de la piel'),
+  (1, 1, DATE_ADD(@viernes,   INTERVAL 7 DAY),  '09:30:00', 1, 'Entrega de resultados de laboratorio'),
+  (2, 6, DATE_ADD(@sabado,    INTERVAL 7 DAY),  '09:30:00', 1, 'Seguimiento del plan alimentario'),
+  (2, 2, DATE_ADD(@martes,    INTERVAL 7 DAY),  '09:00:00', 1, 'Control de crecimiento de su hijo'),
+  (2, 5, DATE_ADD(@lunes,     INTERVAL 14 DAY), '08:30:00', 1, 'Dolor de rodilla al correr'),
+  (1, 7, DATE_ADD(@jueves,    INTERVAL 14 DAY), '14:00:00', 1, 'Chequeo general');
 
 
 -- procedimientos almacenados
@@ -317,12 +394,60 @@ END //
 
 
 
--- especialidades para llenar los selects
+-- especialidades para llenar los selects y las tarjetas publicas
 CREATE PROCEDURE sp_listar_especialidades()
 BEGIN
-  SELECT id, nombre, descripcion
+  SELECT id, nombre, descripcion, icono, color
   FROM especialidades
   ORDER BY nombre;
+END //
+
+
+-- catalogos que llenan los selects de las vistas
+-- (antes estas listas estaban escritas a mano dentro del HTML)
+CREATE PROCEDURE sp_listar_generos()
+BEGIN
+  SELECT codigo, nombre
+  FROM generos
+  ORDER BY orden;
+END //
+
+
+CREATE PROCEDURE sp_listar_dias()
+BEGIN
+  SELECT nombre, etiqueta
+  FROM dias_semana
+  ORDER BY orden;
+END //
+
+
+-- todos los estados, para la leyenda del calendario
+CREATE PROCEDURE sp_listar_estados_cita()
+BEGIN
+  SELECT id, nombre, clase_css, seleccionable
+  FROM estados_cita
+  ORDER BY id;
+END //
+
+
+-- solo los estados a los que el medico o el administrador puede mover una cita
+CREATE PROCEDURE sp_listar_estados_seleccionables()
+BEGIN
+  SELECT id, nombre, clase_css
+  FROM estados_cita
+  WHERE seleccionable = TRUE
+  ORDER BY id;
+END //
+
+
+-- anios que realmente tienen citas, para el filtro del reporte
+-- se agrega el anio actual aunque todavia no tenga citas registradas
+CREATE PROCEDURE sp_anios_citas()
+BEGIN
+  SELECT DISTINCT YEAR(fecha) AS anio FROM citas
+  UNION
+  SELECT YEAR(CURDATE())
+  ORDER BY anio;
 END //
 
 
@@ -344,7 +469,7 @@ END //
 CREATE PROCEDURE sp_listar_medicos_publico()
 BEGIN
   SELECT m.id, u.nombre, m.biografia, m.numero_colegiado,
-         m.especialidad_id, e.nombre AS especialidad
+         m.especialidad_id, e.nombre AS especialidad, e.color, e.icono
   FROM medicos m
   INNER JOIN usuarios u ON u.id = m.usuario_id
   INNER JOIN especialidades e ON e.id = m.especialidad_id
@@ -395,10 +520,11 @@ CREATE PROCEDURE sp_franjas_medico(
   IN p_medico_id INT
 )
 BEGIN
-  SELECT id, dia_semana, hora_inicio, hora_fin
-  FROM horarios_disponibles
-  WHERE medico_id = p_medico_id
-  ORDER BY FIELD(dia_semana,'Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'), hora_inicio;
+  SELECT h.id, h.dia_semana, d.etiqueta AS dia_etiqueta, h.hora_inicio, h.hora_fin
+  FROM horarios_disponibles h
+  INNER JOIN dias_semana d ON d.nombre = h.dia_semana
+  WHERE h.medico_id = p_medico_id
+  ORDER BY d.orden, h.hora_inicio;
 END //
 
 
@@ -478,6 +604,7 @@ BEGIN
   SELECT
     c.id, c.fecha, c.hora, c.motivo,
     ec.nombre AS estado,
+    ec.clase_css AS clase_estado,
     u.nombre  AS medico,
     e.nombre  AS especialidad
   FROM citas c
@@ -497,7 +624,8 @@ CREATE PROCEDURE sp_listar_citas_medico(
 BEGIN
   SELECT
     c.id, c.fecha, c.hora, c.motivo,
-    ec.nombre   AS estado,
+    ec.nombre    AS estado,
+    ec.clase_css AS clase_estado,
     up.nombre   AS paciente,
     up.cedula   AS cedula_paciente,
     up.telefono AS telefono_paciente
@@ -518,7 +646,8 @@ CREATE PROCEDURE sp_agenda_diaria_medico(
 BEGIN
   SELECT
     c.id, c.hora, c.motivo,
-    ec.nombre   AS estado,
+    ec.nombre    AS estado,
+    ec.clase_css AS clase_estado,
     up.nombre   AS paciente,
     up.cedula   AS cedula_paciente,
     up.telefono AS telefono_paciente
@@ -538,6 +667,7 @@ BEGIN
   SELECT
     c.id, c.fecha, c.hora, c.motivo,
     ec.nombre AS estado,
+    ec.clase_css AS clase_estado,
     up.nombre AS paciente,
     um.nombre AS medico,
     e.nombre  AS especialidad
@@ -572,6 +702,7 @@ BEGIN
   SELECT
     c.id, c.fecha, c.hora, c.motivo,
     ec.nombre AS estado,
+    ec.clase_css AS clase_estado,
     p.id      AS paciente_id,
     up.id     AS paciente_usuario_id,
     up.nombre AS paciente,
@@ -647,6 +778,7 @@ BEGIN
   SELECT
     c.fecha, c.hora,
     ec.nombre AS estado,
+    ec.clase_css AS clase_estado,
     up.nombre AS paciente,
     um.nombre AS medico
   FROM citas c
@@ -664,11 +796,13 @@ END //
 -- crud de especialidades (administrador)
 CREATE PROCEDURE sp_crear_especialidad(
   IN p_nombre      VARCHAR(100),
-  IN p_descripcion TEXT
+  IN p_descripcion TEXT,
+  IN p_icono       VARCHAR(50),
+  IN p_color       VARCHAR(7)
 )
 BEGIN
-  INSERT INTO especialidades (nombre, descripcion)
-  VALUES (p_nombre, p_descripcion);
+  INSERT INTO especialidades (nombre, descripcion, icono, color)
+  VALUES (p_nombre, p_descripcion, p_icono, p_color);
   SELECT LAST_INSERT_ID() AS especialidad_id;
 END //
 
@@ -676,11 +810,16 @@ END //
 CREATE PROCEDURE sp_actualizar_especialidad(
   IN p_id          INT,
   IN p_nombre      VARCHAR(100),
-  IN p_descripcion TEXT
+  IN p_descripcion TEXT,
+  IN p_icono       VARCHAR(50),
+  IN p_color       VARCHAR(7)
 )
 BEGIN
   UPDATE especialidades
-  SET nombre = p_nombre, descripcion = p_descripcion
+  SET nombre      = p_nombre,
+      descripcion = p_descripcion,
+      icono       = p_icono,
+      color       = p_color
   WHERE id = p_id;
   SELECT 'OK' AS resultado;
 END //

@@ -26,6 +26,32 @@
         }
     }
 
+    // catalogo de dias, llena el select de las franjas de atencion
+    function ListarDiasModel()
+    {
+        try
+        {
+            $conn = OpenDB();
+
+            $sql = "CALL sp_listar_dias()";
+            $response = $conn -> query($sql);
+
+            $datos = array();
+            while($fila = $response -> fetch_assoc())
+            {
+                $datos[] = $fila;
+            }
+
+            CloseDB($conn);
+            return $datos;
+        }
+        catch(Exception $e)
+        {
+            AddError($e, 'ListarDiasModel');
+            return array();
+        }
+    }
+
     function MedicosPorEspecialidadModel($especialidadId)
     {
         try
@@ -177,7 +203,7 @@
         }
     }
 
-    function CrearEspecialidadModel($nombre, $descripcion)
+    function CrearEspecialidadModel($nombre, $descripcion, $icono, $color)
     {
         try
         {
@@ -185,8 +211,10 @@
 
             $nombre      = $conn -> real_escape_string($nombre);
             $descripcion = $conn -> real_escape_string($descripcion);
+            $icono       = $conn -> real_escape_string($icono);
+            $color       = $conn -> real_escape_string($color);
 
-            $sql = "CALL sp_crear_especialidad('$nombre','$descripcion')";
+            $sql = "CALL sp_crear_especialidad('$nombre','$descripcion','$icono','$color')";
             $response = $conn -> query($sql);
 
             CloseDB($conn);
@@ -199,7 +227,7 @@
         }
     }
 
-    function ActualizarEspecialidadModel($id, $nombre, $descripcion)
+    function ActualizarEspecialidadModel($id, $nombre, $descripcion, $icono, $color)
     {
         try
         {
@@ -207,8 +235,10 @@
 
             $nombre      = $conn -> real_escape_string($nombre);
             $descripcion = $conn -> real_escape_string($descripcion);
+            $icono       = $conn -> real_escape_string($icono);
+            $color       = $conn -> real_escape_string($color);
 
-            $sql = "CALL sp_actualizar_especialidad($id,'$nombre','$descripcion')";
+            $sql = "CALL sp_actualizar_especialidad($id,'$nombre','$descripcion','$icono','$color')";
             $response = $conn -> query($sql);
 
             CloseDB($conn);

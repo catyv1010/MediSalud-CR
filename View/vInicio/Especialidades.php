@@ -4,8 +4,8 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Controller/CatalogosCont
 // pagina de especialidades
 $titulo_pagina = "Especialidades - MediSalud CR";
 
-// lista de prueba, despues la cargamos desde la base
-$especialidades = EspecialidadesAdminControl();
+// el nombre, la descripcion, el icono y el color salen del catalogo de la base
+$especialidades = EspecialidadesPublicoControl();
 
 include_once '../LayoutExterno.php';
 ImportCSS($titulo_pagina);
@@ -38,39 +38,23 @@ PintarHeader();
                 </div>
             </div>
 
-            <?php
-            $colores_especialidad = [
-                "Medicina General" => "#244cb6",
-                "Pediatria"        => "#2e75b6",
-                "Ginecologia"      => "#9b59b6",
-                "Dermatologia"     => "#70ad47",
-                "Ortopedia"        => "#e67e22",
-                "Nutricion"        => "#16a085",
-        ];
-        ?>
-
             <div class="row">
-                <?php foreach ($especialidades as $e): ?>
-                <?php
-                    $color = $colores_especialidad[$e['nombre']] ?? "#244cb6";
-                    $ancla = "esp-" . $e['id'];
-                ?>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div
-                        style="background:#ffffff; padding:42px 30px; border-radius:14px; height:100%; border-top:5px solid <?= $color ?>; box-shadow:0 6px 24px rgba(31,44,77,0.08);">
-                        <div
-                            style="width:70px; height:70px; background:<?= $color ?>; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:20px;">
-                            <i class="fa fa-plus-square" style="color:white; font-size:32px;"></i>
+                <?php foreach ($especialidades as $e) { ?>
+                    <?php
+                        $color = htmlspecialchars($e['color']);
+                        $ancla = "esp-" . $e['id'];
+                    ?>
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="tarjeta-especialidad" style="border-top-color:<?php echo $color; ?>;">
+                            <div class="tarjeta-especialidad-icono" style="background:<?php echo $color; ?>;">
+                                <i class="<?php echo htmlspecialchars($e['icono']); ?>"></i>
+                            </div>
+                            <h5 style="color:<?php echo $color; ?>;"><?php echo htmlspecialchars($e['nombre']); ?></h5>
+                            <p><?php echo htmlspecialchars($e['descripcion'] ?? ''); ?></p>
+                            <a href="Medicos.php#<?php echo $ancla; ?>" style="color:<?php echo $color; ?>;">Ver médicos &raquo;</a>
                         </div>
-                        <h5 style="color:<?= $color ?>; font-size:23px; margin-bottom:12px;">
-                            <?= htmlspecialchars($e['nombre']) ?></h5>
-                        <p style="color:#666; line-height:1.7; margin-bottom:20px;">
-                            <?= htmlspecialchars($e['descripcion']) ?></p>
-                        <a href="Medicos.php#<?= $ancla ?>"
-                            style="color:<?= $color ?>; font-weight:bold; font-size:17px;">Ver médico &raquo;</a>
                     </div>
-                </div>
-                <?php endforeach; ?>
+                <?php } ?>
             </div>
         </div>
     </section>

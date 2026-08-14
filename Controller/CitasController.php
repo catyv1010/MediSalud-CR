@@ -159,8 +159,13 @@ if (isset($_POST["btnActualizarEstado"])) {
         ? '../View/vCitas/CitasMedico.php'
         : '../View/vCitas/GestionCitas.php';
 
-    // estados permitidos: 2=Atendida, 3=Cancelada, 4=No asistio
-    if (!in_array($estadoId, array(2, 3, 4))) {
+    // los estados permitidos salen del catalogo de la base, no de una lista escrita aqui
+    $permitidos = array();
+    foreach (EstadosSeleccionablesControl() as $estado) {
+        $permitidos[] = intval($estado['id']);
+    }
+
+    if (!in_array($estadoId, $permitidos)) {
         header("Location: $rutaVolver?msj=" . urlencode("El estado indicado no es válido.") . "&tipo=error");
         exit();
     }
@@ -174,6 +179,13 @@ if (isset($_POST["btnActualizarEstado"])) {
     // un medico solo puede tocar sus propias citas
     if ($_SESSION['rol'] == 'medico' && $cita['medico_usuario_id'] != $_SESSION['usuario_id']) {
         header("Location: $rutaVolver?msj=" . urlencode("Solo puede actualizar sus propias citas.") . "&tipo=error");
+        exit();
+    }
+
+    // solo se le cambia el estado a las citas que siguen agendadas,
+    // una cita ya cerrada no se vuelve a mover aunque manden el formulario a mano
+    if ($cita['estado'] != 'Agendada') {
+        header("Location: $rutaVolver?msj=" . urlencode("Esa cita ya fue cerrada como \"" . $cita['estado'] . "\" y no se puede volver a cambiar.") . "&tipo=error");
         exit();
     }
 
@@ -192,6 +204,30 @@ if (isset($_POST["btnActualizarEstado"])) {
 function EspecialidadesControl()
 {
     return ListarEspecialidadesModel();
+}
+
+// catalogos de la base que llenan los selects y la leyenda del calendario
+function EstadosSeleccionablesControl()
+{
+    return ListarEstadosSeleccionablesModel();
+}
+
+function EstadosCitaControl()
+{
+    return ListarEstadosCitaModel();
+}
+
+function AniosCitasControl()
+{
+    return AniosCitasModel();
+}
+
+// nombres de los meses, los usan el calendario y el reporte
+// (viven aqui y no en la vista para no repetirlos en dos pantallas)
+function NombresMeses()
+{
+    return array(1=>'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                 'Julio', 'Agosto', 'Setiembre', 'Octubre', 'Noviembre', 'Diciembre');
 }
 
 function CitasPacienteControl()

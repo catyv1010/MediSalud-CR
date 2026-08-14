@@ -1,6 +1,84 @@
 <?php
     include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Model/UtilitarioModel.php';
 
+    // catalogo de estados: todos (para la leyenda del calendario)
+    function ListarEstadosCitaModel()
+    {
+        try
+        {
+            $conn = OpenDB();
+
+            $sql = "CALL sp_listar_estados_cita()";
+            $response = $conn -> query($sql);
+
+            $datos = array();
+            while($fila = $response -> fetch_assoc())
+            {
+                $datos[] = $fila;
+            }
+
+            CloseDB($conn);
+            return $datos;
+        }
+        catch(Exception $e)
+        {
+            AddError($e, 'ListarEstadosCitaModel');
+            return array();
+        }
+    }
+
+    // solo los estados a los que se puede mover una cita desde la pantalla
+    function ListarEstadosSeleccionablesModel()
+    {
+        try
+        {
+            $conn = OpenDB();
+
+            $sql = "CALL sp_listar_estados_seleccionables()";
+            $response = $conn -> query($sql);
+
+            $datos = array();
+            while($fila = $response -> fetch_assoc())
+            {
+                $datos[] = $fila;
+            }
+
+            CloseDB($conn);
+            return $datos;
+        }
+        catch(Exception $e)
+        {
+            AddError($e, 'ListarEstadosSeleccionablesModel');
+            return array();
+        }
+    }
+
+    // anios que tienen citas registradas, para el filtro del reporte
+    function AniosCitasModel()
+    {
+        try
+        {
+            $conn = OpenDB();
+
+            $sql = "CALL sp_anios_citas()";
+            $response = $conn -> query($sql);
+
+            $datos = array();
+            while($fila = $response -> fetch_assoc())
+            {
+                $datos[] = intval($fila['anio']);
+            }
+
+            CloseDB($conn);
+            return $datos;
+        }
+        catch(Exception $e)
+        {
+            AddError($e, 'AniosCitasModel');
+            return array();
+        }
+    }
+
     // el SP valida que el horario este libre, si esta ocupado lanza error
     function AgendarCitaModel($pacienteId, $medicoId, $fecha, $hora, $motivo)
     {

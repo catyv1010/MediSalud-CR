@@ -5,7 +5,8 @@ ValidarSesion(array('medico'));
 
 include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Controller/CitasController.php';
 
-$citas = CitasMedicoControl();
+$citas   = CitasMedicoControl();
+$estados = EstadosSeleccionablesControl();
 
 $titulo_pagina = "Mi agenda - MediSalud CR";
 include_once '../LayoutInterno.php';
@@ -45,18 +46,20 @@ PintarHeader();
                                     <td><?php echo htmlspecialchars($cita['paciente']); ?></td>
                                     <td><?php echo htmlspecialchars($cita['cedula_paciente']); ?></td>
                                     <td><?php echo htmlspecialchars($cita['motivo'] ?? ''); ?></td>
-                                    <td><span class="badge-estado <?php echo ClaseEstado($cita['estado']); ?>">
+                                    <td><span class="badge-estado <?php echo htmlspecialchars($cita['clase_estado']); ?>">
                                         <?php echo htmlspecialchars($cita['estado']); ?></span></td>
                                     <td>
                                         <?php if ($cita['estado'] === 'Agendada') { ?>
-                                            <!-- cambio de estado: 2=Atendida, 3=Cancelada, 4=No asistio -->
+                                            <!-- los estados se cargan del catalogo estados_cita de la base -->
                                             <form action="../../Controller/CitasController.php" method="POST" class="form-estado form-inline">
                                                 <input type="hidden" name="cita_id" value="<?php echo $cita['id']; ?>">
                                                 <select class="form-control form-control-sm mr-2" name="estado_id" required>
                                                     <option value="">Estado...</option>
-                                                    <option value="2">Atendida</option>
-                                                    <option value="3">Cancelada</option>
-                                                    <option value="4">No asistió</option>
+                                                    <?php foreach ($estados as $estado) { ?>
+                                                        <option value="<?php echo $estado['id']; ?>">
+                                                            <?php echo htmlspecialchars($estado['nombre']); ?>
+                                                        </option>
+                                                    <?php } ?>
                                                 </select>
                                                 <button type="submit" name="btnActualizarEstado" class="btn-medisalud-sec">Guardar</button>
                                             </form>

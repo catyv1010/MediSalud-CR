@@ -1,5 +1,10 @@
 <?php
 // pantalla principal
+include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Controller/CatalogosController.php';
+
+// las especialidades que se muestran salen de la base, no de una lista fija
+$especialidades = EspecialidadesPublicoControl();
+
 $titulo_pagina = "MediSalud CR - Clínica MediSalud CR";
 include_once '../LayoutExterno.php';
 ImportCSS($titulo_pagina);
@@ -87,26 +92,20 @@ PintarHeader();
                 </div>
             </div>
             <div class="row">
-                <?php
-                $especialidades = [
-                    ['Medicina General',  'Atención médica para todas las edades', 'ti-heart'],
-                    ['Pediatría',         'Atención de niños y adolescentes',     'ti-shine'],
-                    ['Ginecología',       'Salud reproductiva femenina',          'ti-user'],
-                    ['Dermatología',      'Diagnóstico de enfermedades de la piel','ti-eye'],
-                    ['Ortopedia',         'Sistema musculoesquelético',           'ti-pulse'],
-                    ['Nutrición',         'Asesoría nutricional personalizada',    'ti-apple'],
-                ];
-                foreach ($especialidades as $esp): ?>
-                <div class="col-xl-4 col-lg-4 col-md-6">
-                    <div class="single-cat text-center mb-30">
-                        <div class="cat-icon"><i class="<?= $esp[2] ?>"></i></div>
-                        <div class="cat-cap">
-                            <h5><?= $esp[0] ?></h5>
-                            <p><?= $esp[1] ?></p>
+                <?php foreach ($especialidades as $esp) { ?>
+                    <div class="col-xl-4 col-lg-4 col-md-6">
+                        <div class="single-cat text-center mb-30">
+                            <div class="cat-icon">
+                                <i class="<?php echo htmlspecialchars($esp['icono']); ?>"
+                                   style="color:<?php echo htmlspecialchars($esp['color']); ?>;"></i>
+                            </div>
+                            <div class="cat-cap">
+                                <h5><?php echo htmlspecialchars($esp['nombre']); ?></h5>
+                                <p><?php echo htmlspecialchars($esp['descripcion'] ?? ''); ?></p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <?php endforeach; ?>
+                <?php } ?>
             </div>
         </div>
     </div>

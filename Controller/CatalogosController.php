@@ -13,13 +13,18 @@ if (isset($_POST["btnCrearEspecialidad"])) {
 
     $nombre      = trim($_POST['nombre'] ?? '');
     $descripcion = trim($_POST['descripcion'] ?? '');
+    $icono       = trim($_POST['icono'] ?? '');
+    $color       = trim($_POST['color'] ?? '');
 
     if ($nombre == '') {
         header("Location: ../View/vAdmin/Especialidades.php?msj=" . urlencode("El nombre de la especialidad es obligatorio.") . "&tipo=error");
         exit();
     }
 
-    if (CrearEspecialidadModel($nombre, $descripcion)) {
+    $icono = IconoValido($icono);
+    $color = ColorValido($color);
+
+    if (CrearEspecialidadModel($nombre, $descripcion, $icono, $color)) {
         header("Location: ../View/vAdmin/Especialidades.php?msj=" . urlencode("Especialidad creada.") . "&tipo=ok");
         exit();
     }
@@ -36,13 +41,18 @@ if (isset($_POST["btnActualizarEspecialidad"])) {
     $id          = intval($_POST['id'] ?? 0);
     $nombre      = trim($_POST['nombre'] ?? '');
     $descripcion = trim($_POST['descripcion'] ?? '');
+    $icono       = trim($_POST['icono'] ?? '');
+    $color       = trim($_POST['color'] ?? '');
 
     if ($id <= 0 || $nombre == '') {
         header("Location: ../View/vAdmin/Especialidades.php?msj=" . urlencode("Debe indicar la especialidad y su nombre.") . "&tipo=error");
         exit();
     }
 
-    if (ActualizarEspecialidadModel($id, $nombre, $descripcion)) {
+    $icono = IconoValido($icono);
+    $color = ColorValido($color);
+
+    if (ActualizarEspecialidadModel($id, $nombre, $descripcion, $icono, $color)) {
         header("Location: ../View/vAdmin/Especialidades.php?msj=" . urlencode("Especialidad actualizada.") . "&tipo=ok");
         exit();
     }
@@ -133,7 +143,11 @@ if (isset($_POST["btnAgregarHorario"])) {
     $horaInicio = $_POST['hora_inicio'] ?? '';
     $horaFin    = $_POST['hora_fin'] ?? '';
 
-    $dias = array('Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo');
+    // los dias validos salen del catalogo de la base, no de una lista escrita aqui
+    $dias = array();
+    foreach (DiasControl() as $dia) {
+        $dias[] = $dia['nombre'];
+    }
 
     if ($medicoId <= 0 || !in_array($diaSemana, $dias) || $horaInicio == '' || $horaFin == '') {
         header("Location: ../View/vAdmin/HorariosMedico.php?medico=$medicoId&msj=" . urlencode("Debe indicar el día y las horas de la franja.") . "&tipo=error");
@@ -178,18 +192,24 @@ if (isset($_POST["btnEstadoUsuario"])) {
     $usuarioId = intval($_POST['usuario_id'] ?? 0);
     $activo    = intval($_POST['activo'] ?? 0);
 
+    // se vuelve a la pantalla desde donde se presiono el boton
+    // (el mismo boton esta en Usuarios y en Medicos)
+    $rutaVolver = ($_POST['origen'] ?? '') == 'medicos'
+        ? '../View/vAdmin/Medicos.php'
+        : '../View/vAdmin/Usuarios.php';
+
     // el administrador no se puede desactivar a si mismo
     if ($usuarioId == $_SESSION['usuario_id']) {
-        header("Location: ../View/vAdmin/Usuarios.php?msj=" . urlencode("No puede desactivar su propio usuario.") . "&tipo=error");
+        header("Location: $rutaVolver?msj=" . urlencode("No puede desactivar su propio usuario.") . "&tipo=error");
         exit();
     }
 
     if (CambiarEstadoUsuarioModel($usuarioId, $activo)) {
-        header("Location: ../View/vAdmin/Usuarios.php?msj=" . urlencode("Estado del usuario actualizado.") . "&tipo=ok");
+        header("Location: $rutaVolver?msj=" . urlencode("Estado del usuario actualizado.") . "&tipo=ok");
         exit();
     }
 
-    header("Location: ../View/vAdmin/Usuarios.php?msj=" . urlencode("No se pudo actualizar el usuario.") . "&tipo=error");
+    header("Location: $rutaVolver?msj=" . urlencode("No se pudo actualizar el usuario.") . "&tipo=error");
     exit();
 }
 
@@ -241,4 +261,44 @@ function FranjasAdminControl($medicoId)
 function UsuariosAdminControl()
 {
     return ListarUsuariosModel();
+}
+
+// catalogos de la base que llenan los selects de las vistas
+
+function GenerosControl()
+{
+    return ListarGenerosModel();
+}
+
+function DiasControl()
+{
+    return ListarDiasModel();
+}
+
+// iconos disponibles para las tarjetas de especialidades
+// son las clases de la plantilla (themify icons), por eso viven en el controlador
+function IconosControl()
+{
+    return array(
+        'ti-heart'    => 'Corazón',
+        'ti-shine'    => 'Brillo',
+        'ti-user'     => 'Persona',
+        'ti-eye'      => 'Ojo',
+        'ti-pulse'    => 'Pulso',
+        'ti-apple'    => 'Manzana',
+        'ti-plus'     => 'Cruz médica',
+        'ti-clipboard'=> 'Expediente'
+    );
+}
+
+// el icono debe ser uno de la lista, si no se manda el que trae por defecto
+function IconoValido($icono)
+{
+    return array_key_exists($icono, IconosControl()) ? $icono : 'ti-heart';
+}
+
+// el color debe venir en formato #RRGGBB, si no se usa el azul del sistema
+function ColorValido($color)
+{
+    return preg_match('/^#[0-9a-fA-F]{6}$/', $color) ? $color : '#244cb6';
 }

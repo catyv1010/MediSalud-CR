@@ -1,10 +1,16 @@
 <?php
 
     // conexion a la base, si cambia el puerto solo se toca aqui
+    // el juego de caracteres se fija explicitamente para que las tildes
+    // y las enes viajen bien entre la base y las pantallas
     function OpenDB()
     {
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-        return new mysqli("127.0.0.1:3307", "root", "", "medisalud_cr");
+
+        $conn = new mysqli("127.0.0.1:3307", "root", "", "medisalud_cr");
+        $conn -> set_charset("utf8mb4");
+
+        return $conn;
     }
 
     function CloseDB($conn)

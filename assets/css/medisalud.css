@@ -146,6 +146,16 @@ main li {
     object-position: top center;
 }
 
+/* avatar para el medico que todavia no tiene foto cargada */
+.tarjeta-medico-sinfoto {
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 90px;
+    opacity: 0.35;
+}
+
 .tarjeta-medico-info {
     padding: 26px 24px 30px;
     text-align: center;
@@ -177,6 +187,65 @@ main li {
 
 .tarjeta-medico-ancla:target .tarjeta-medico {
     box-shadow: 0 0 0 4px #244cb6, 0 14px 34px rgba(31, 44, 77, 0.18);
+}
+
+/* tarjetas de especialidades (el color y el icono vienen de la base) */
+.tarjeta-especialidad {
+    background: #ffffff;
+    padding: 42px 30px;
+    border-radius: 14px;
+    height: 100%;
+    border-top: 5px solid #244cb6;
+    box-shadow: 0 6px 24px rgba(31, 44, 77, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tarjeta-especialidad:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 14px 34px rgba(31, 44, 77, 0.14);
+}
+
+.tarjeta-especialidad-icono {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tarjeta-especialidad-icono i {
+    color: #ffffff;
+    font-size: 30px;
+}
+
+.tarjeta-especialidad h5 {
+    font-size: 23px;
+    margin-bottom: 12px;
+}
+
+.tarjeta-especialidad p {
+    color: #666666;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.tarjeta-especialidad a {
+    font-weight: bold;
+    font-size: 17px;
+}
+
+/* punto de color con el icono, en la tabla de especialidades del administrador */
+.punto-especialidad {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    color: #ffffff;
+    font-size: 15px;
 }
 
 /* enlaces dentro de los formularios (ej. olvido su contrasena) */

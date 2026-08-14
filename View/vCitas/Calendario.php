@@ -17,10 +17,11 @@ $anioAnterior = ($mes == 1)  ? $anio - 1 : $anio;
 $mesSiguiente = ($mes == 12) ? 1  : $mes + 1;
 $anioSiguiente= ($mes == 12) ? $anio + 1 : $anio;
 
-$nombresMes = array(1=>'Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre');
+$nombresMes = NombresMeses();
 
-// citas del mes agrupadas por dia
+// citas del mes agrupadas por dia y estados para la leyenda
 $citasPorDia = CitasDelMesControl($mes, $anio);
+$estados     = EstadosCitaControl();
 
 // datos para armar la cuadricula
 $diasDelMes = intval(date('t', strtotime("$anio-$mes-01")));
@@ -79,7 +80,7 @@ PintarHeader();
 
                                 if (isset($citasPorDia[$dia])) {
                                     foreach ($citasPorDia[$dia] as $cita) {
-                                        echo '<div class="cita-cal ' . ClaseEstado($cita['estado']) . '">'
+                                        echo '<div class="cita-cal ' . htmlspecialchars($cita['clase_estado']) . '">'
                                            . substr($cita['hora'], 0, 5) . ' '
                                            . htmlspecialchars($cita['medico'])
                                            . '<br><small>' . htmlspecialchars($cita['paciente']) . '</small>'
@@ -106,11 +107,13 @@ PintarHeader();
                     </tbody>
                 </table>
             </div>
+            <!-- leyenda: sale del catalogo de estados de la base -->
             <p style="color:#5a6272; font-size:13px; margin-top:8px;">
-                <span class="badge-estado estado-agendada">Agendada</span>
-                <span class="badge-estado estado-atendida">Atendida</span>
-                <span class="badge-estado estado-cancelada">Cancelada</span>
-                <span class="badge-estado estado-no-asistio">No asistió</span>
+                <?php foreach ($estados as $estado) { ?>
+                    <span class="badge-estado <?php echo htmlspecialchars($estado['clase_css']); ?>">
+                        <?php echo htmlspecialchars($estado['nombre']); ?>
+                    </span>
+                <?php } ?>
             </p>
         </div>
 

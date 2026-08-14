@@ -4,9 +4,9 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Controller/CatalogosCont
 // pagina de medicos
 $titulo_pagina = "Médicos - MediSalud CR";
 
-// lista de prueba, despues la cargamos desde la base
+// los medicos activos salen de la base
 // cada medico tiene su propia foto en assets/img/medicos
-// el ancla permite llegar directo a cada medico desde la pagina de especialidades
+// el ancla permite llegar directo a cada especialidad desde la pagina de especialidades
 $medicos = MedicosPublicoControl();
 
 include_once '../LayoutExterno.php';
@@ -41,28 +41,41 @@ PintarHeader();
             </div>
 
             <div class="row justify-content-center">
-                <?php foreach ($medicos as $m): ?>
-                <?php
-                    $ancla = "esp-" . $m['especialidad_id'];
-                    $foto  = "../../assets/img/medicos/medico" . $m['id'] . ".jpg";
-                    $bio   = $m['biografia'] ?? '';
-                    $bio_corta = strlen($bio) > 120 ? substr($bio, 0, 120) . '...' : $bio;
-                ?>
-                <div class="col-lg-4 col-md-6 mb-4 tarjeta-medico-ancla" id="<?= $ancla ?>">
-                    <div class="tarjeta-medico">
-                        <div class="tarjeta-medico-foto">
-                            <img src="<?= $foto ?>" alt="<?= htmlspecialchars($m['nombre']) ?>">
-                        </div>
-                        <div class="tarjeta-medico-info">
-                            <h5><?= htmlspecialchars($m['nombre']) ?></h5>
-                            <p class="especialidad"><?= htmlspecialchars($m['especialidad']) ?></p>
-                            <p class="colegiado">Colegiado: <?= htmlspecialchars($m['numero_colegiado']) ?></p>
-                            <p class="bio-corta"><?= htmlspecialchars($bio_corta) ?></p>
-                            <a href="IniciarSesion.php" class="btn-medisalud">Ver agenda</a>
+                <?php foreach ($medicos as $m) { ?>
+                    <?php
+                        $ancla = "esp-" . $m['especialidad_id'];
+
+                        // si el medico todavia no tiene foto propia se muestra un icono,
+                        // asi la tarjeta nunca queda con la imagen rota
+                        $nombreFoto = 'medico' . $m['id'] . '.jpg';
+                        $tieneFoto  = file_exists($_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/assets/img/medicos/' . $nombreFoto);
+
+                        $bio       = $m['biografia'] ?? '';
+                        $bioCorta  = (strlen($bio) > 120) ? substr($bio, 0, 120) . '...' : $bio;
+                    ?>
+                    <div class="col-lg-4 col-md-6 mb-4 tarjeta-medico-ancla" id="<?php echo $ancla; ?>">
+                        <div class="tarjeta-medico">
+                            <div class="tarjeta-medico-foto">
+                                <?php if ($tieneFoto) { ?>
+                                    <img src="../../assets/img/medicos/<?php echo $nombreFoto; ?>" alt="<?php echo htmlspecialchars($m['nombre']); ?>">
+                                <?php } else { ?>
+                                    <div class="tarjeta-medico-sinfoto" style="color:<?php echo htmlspecialchars($m['color']); ?>;">
+                                        <i class="fa fa-user-md"></i>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                            <div class="tarjeta-medico-info">
+                                <h5><?php echo htmlspecialchars($m['nombre']); ?></h5>
+                                <p class="especialidad" style="color:<?php echo htmlspecialchars($m['color']); ?>;">
+                                    <?php echo htmlspecialchars($m['especialidad']); ?>
+                                </p>
+                                <p class="colegiado">Colegiado: <?php echo htmlspecialchars($m['numero_colegiado']); ?></p>
+                                <p class="bio-corta"><?php echo htmlspecialchars($bioCorta); ?></p>
+                                <a href="IniciarSesion.php" class="btn-medisalud">Ver agenda</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <?php endforeach; ?>
+                <?php } ?>
             </div>
         </div>
     </section>

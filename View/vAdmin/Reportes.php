@@ -12,7 +12,9 @@ if ($mes < 1 || $mes > 12) { $mes = intval(date('n')); }
 
 $reporte = ReporteMensualControl($mes, $anio);
 
-$nombresMes = array(1=>'Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre');
+// los meses vienen del controlador y los anios de la base (los que tienen citas)
+$nombresMes = NombresMeses();
+$anios      = AniosCitasControl();
 
 // totales de la ultima fila
 $totCitas = 0; $totAtendidas = 0; $totCanceladas = 0; $totNoAsistio = 0;
@@ -49,7 +51,7 @@ PintarHeader();
                 </select>
                 <label for="anio" class="mr-2">Año</label>
                 <select class="form-control mr-3" name="anio" id="anio">
-                    <?php for ($a = 2026; $a <= intval(date('Y')) + 1; $a++) { ?>
+                    <?php foreach ($anios as $a) { ?>
                         <option value="<?php echo $a; ?>" <?php echo ($a == $anio) ? 'selected' : ''; ?>><?php echo $a; ?></option>
                     <?php } ?>
                 </select>
