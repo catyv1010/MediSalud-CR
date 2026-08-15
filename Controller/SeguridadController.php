@@ -34,8 +34,13 @@
         }
 
         // si anda con contrasena temporal, solo puede estar en la pantalla de cambiarla
+        // la excepcion se amarra a la accion y no al nombre del controlador, porque
+        // ese mismo archivo tambien procesa la edicion del perfil y por ahi se
+        // colaba una forma de seguir usando el sistema sin cambiar la clave temporal
         $pagina = basename($_SERVER['PHP_SELF']);
-        if (!empty($_SESSION['contrasena_temporal']) && $pagina != 'CambiarContrasena.php' && $pagina != 'UsuariosController.php')
+        $cambiandoContrasena = isset($_POST['btnCambiarContrasena']);
+
+        if (!empty($_SESSION['contrasena_temporal']) && $pagina != 'CambiarContrasena.php' && !$cambiandoContrasena)
         {
             header("Location: /MediSalud-CR/View/vPanel/CambiarContrasena.php?msj=" . urlencode("Debe cambiar su contraseña temporal antes de continuar.") . "&tipo=error");
             exit();

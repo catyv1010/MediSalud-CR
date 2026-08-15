@@ -138,6 +138,13 @@ if (isset($_POST["btnCancelarCita"])) {
         exit();
     }
 
+    // solo se cancela una cita que siga agendada: si el medico ya la cerro como
+    // atendida o no asistio, cancelarla borraria esa decision
+    if ($cita['estado'] != 'Agendada') {
+        header("Location: ../View/vCitas/MisCitas.php?msj=" . urlencode("Esa cita ya fue cerrada como \"" . $cita['estado'] . "\" y no se puede cancelar.") . "&tipo=error");
+        exit();
+    }
+
     if (!CancelarCitaModel($citaId)) {
         header("Location: ../View/vCitas/MisCitas.php?msj=" . urlencode("No se puede cancelar con menos de 24 horas de anticipación.") . "&tipo=error");
         exit();

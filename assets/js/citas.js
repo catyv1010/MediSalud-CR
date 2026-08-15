@@ -32,7 +32,13 @@ $(function () {
     }
 
     // la fecha minima para agendar es hoy
-    var hoy = new Date().toISOString().split("T")[0];
+    // se arma con la fecha local del equipo y no con toISOString(), porque ese
+    // devuelve la fecha en UTC y en costa rica (UTC-6) a partir de las 6 pm ya
+    // marca el dia siguiente, lo que impedia agendar una cita para hoy
+    var ahora = new Date();
+    var hoy = ahora.getFullYear() + "-" +
+              ("0" + (ahora.getMonth() + 1)).slice(-2) + "-" +
+              ("0" + ahora.getDate()).slice(-2);
     $("#fecha").attr("min", hoy);
 
     // al elegir la especialidad se cargan sus medicos

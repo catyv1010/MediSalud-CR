@@ -56,7 +56,12 @@ $(function () {
         "</small>"
     );
 
-    BloquearNombre();
+    // en el registro el campo llega vacio: se bloquea para que lo llene el api.
+    // en mi perfil ya viene con el nombre guardado, ahi se deja editable para
+    // que la persona pueda corregirlo sin tener que borrar y escribir la cedula
+    if ($("#nombre").val() == "") {
+        BloquearNombre();
+    }
 
     $("#cedula").on("keyup", ConsultarNombreAPI);
 
