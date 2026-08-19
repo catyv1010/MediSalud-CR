@@ -43,7 +43,7 @@ PintarHeader();
                                 </div>
                             </div>
                             <div class="form-group mt-4 text-center">
-                                <button type="submit" name="btnRecuperar" class="btn-medisalud">Enviar enlace de recuperación</button>
+                                <button type="submit" name="btnRecuperar" class="btn-medisalud">Enviar contraseña temporal</button>
                             </div>
                             <div class="text-center mt-4">
                                 <p>

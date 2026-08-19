@@ -43,7 +43,7 @@ PintarHeader();
                             <input class="form-control" name="telefono" id="telefono" type="text" value="<?php echo htmlspecialchars($usuario['telefono'] ?? ''); ?>">
                         </div>
                         <div class="form-group mt-4 text-center">
-                            <button type="submit" name="btnCambiarPerfil" class="btn-medisalud">Procesar</button>
+                            <button type="submit" name="btnCambiarPerfil" class="btn-medisalud">Guardar cambios</button>
                         </div>
                     </form>
 

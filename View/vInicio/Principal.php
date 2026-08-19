@@ -5,7 +5,7 @@ include_once $_SERVER['DOCUMENT_ROOT'] . '/MediSalud-CR/Controller/CatalogosCont
 // las especialidades que se muestran salen de la base, no de una lista fija
 $especialidades = EspecialidadesPublicoControl();
 
-$titulo_pagina = "MediSalud CR - Clínica MediSalud CR";
+$titulo_pagina = "Clínica MediSalud CR - Agende su cita médica en línea";
 include_once '../LayoutExterno.php';
 ImportCSS($titulo_pagina);
 PintarHeader();

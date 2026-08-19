@@ -11,7 +11,7 @@ function ImportCSS($titulo = 'MediSalud CR')
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>' . htmlspecialchars($titulo) . '</title>
-    <meta name="description" content="Sistema de agendamiento de citas medicas - Clinica MediSalud CR">
+    <meta name="description" content="Sistema de agendamiento de citas médicas de la Clínica MediSalud CR">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="../../assets/img/favicon.ico">
 

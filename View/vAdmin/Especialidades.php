@@ -51,7 +51,7 @@ PintarHeader();
                             <textarea class="form-control" name="descripcion" id="descripcion" rows="3" maxlength="500"><?php echo ($editando != null) ? htmlspecialchars($editando['descripcion'] ?? '') : ''; ?></textarea>
                         </div>
                         <!-- el icono y el color se guardan en la base y son los que se
-                             muestran en la pagina publica de especialidades -->
+                             muestran en la pagina publica de especialidades (ver vInicio/Especialidades.php) -->
                         <div class="row">
                             <div class="col-8">
                                 <div class="form-group">
