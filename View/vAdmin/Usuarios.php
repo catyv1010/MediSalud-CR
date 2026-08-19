@@ -42,7 +42,7 @@ PintarHeader();
                                     <td><?php echo htmlspecialchars($usuario['cedula']); ?></td>
                                     <td><?php echo htmlspecialchars($usuario['nombre']); ?></td>
                                     <td><?php echo htmlspecialchars($usuario['correo']); ?></td>
-                                    <td><?php echo htmlspecialchars($usuario['rol']); ?></td>
+                                    <td><?php echo htmlspecialchars(NombreRol($usuario['rol'])); ?></td>
                                     <td>
                                         <span class="badge-estado <?php echo $usuario['activo'] ? 'estado-atendida' : 'estado-cancelada'; ?>">
                                             <?php echo $usuario['activo'] ? 'Activo' : 'Inactivo'; ?>

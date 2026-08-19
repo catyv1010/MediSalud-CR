@@ -24,6 +24,18 @@ function ImportCSS($titulo = 'MediSalud CR')
 ';
 }
 
+// el rol como se guarda en la base, escrito para mostrarlo en pantalla
+function NombreRol($rol)
+{
+    $nombres = array(
+        'paciente'      => 'Paciente',
+        'medico'        => 'Médico',
+        'administrador' => 'Administrador'
+    );
+
+    return isset($nombres[$rol]) ? $nombres[$rol] : $rol;
+}
+
 // barra superior con el usuario, su rol y el menu segun el rol
 function PintarHeader()
 {
@@ -63,7 +75,7 @@ function PintarHeader()
                 </div>
                 <div class="col-lg-4 col-md-5 text-right usuario-sesion">
                     <i class="fa fa-user-circle"></i> ' . $nombre . '
-                    <span class="rol">' . htmlspecialchars($rol) . '</span>
+                    <span class="rol">' . htmlspecialchars(NombreRol($rol)) . '</span>
                     <form action="/MediSalud-CR/Controller/InicioController.php" method="POST" class="form-salir">
                         <button id="btnSalir" name="btnSalir" type="submit" class="btn-salir">
                             <i class="fa fa-sign-out-alt"></i> Salir
