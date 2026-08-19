@@ -33,10 +33,7 @@
             exit();
         }
 
-        // si anda con contrasena temporal, solo puede estar en la pantalla de cambiarla
-        // la excepcion se amarra a la accion y no al nombre del controlador, porque
-        // ese mismo archivo tambien procesa la edicion del perfil y por ahi se
-        // colaba una forma de seguir usando el sistema sin cambiar la clave temporal
+        // con contrasena temporal solo se puede estar en la pantalla de cambiarla
         $pagina = basename($_SERVER['PHP_SELF']);
         $cambiandoContrasena = isset($_POST['btnCambiarContrasena']);
 

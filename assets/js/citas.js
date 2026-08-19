@@ -31,10 +31,7 @@ $(function () {
         return;
     }
 
-    // la fecha minima para agendar es hoy
-    // se arma con la fecha local del equipo y no con toISOString(), porque ese
-    // devuelve la fecha en UTC y en costa rica (UTC-6) a partir de las 6 pm ya
-    // marca el dia siguiente, lo que impedia agendar una cita para hoy
+    // la fecha minima es hoy, con la hora local y no con toISOString() que da UTC
     var ahora = new Date();
     var hoy = ahora.getFullYear() + "-" +
               ("0" + (ahora.getMonth() + 1)).slice(-2) + "-" +

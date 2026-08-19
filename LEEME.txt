@@ -1,0 +1,62 @@
+Sistema de citas médicas - Clínica MediSalud CR
+SC-502 Ambiente Web Cliente/Servidor - Grupo 8
+
+Luis Andrés Granados González
+Andrés Rojas Quesada
+José Alexis Sandi Guillén
+María Catalina Valverde Arroyo
+
+
+COMO INSTALARLO
+
+1. Copiar la carpeta MediSalud-CR dentro de C:\xampp\htdocs\
+2. Encender Apache y MySQL en XAMPP (Apache en el puerto 81, MySQL en el 3307).
+3. Correr el archivo DataBase.sql completo en MySQL Workbench. Crea la base
+   medisalud_cr con las 10 tablas, los 42 procedimientos almacenados y los datos
+   de prueba. Se puede volver a correr las veces que se quiera porque borra y
+   crea todo de nuevo.
+4. Abrir http://localhost:81/MediSalud-CR/
+
+Las citas de prueba se calculan a partir del día en que se corre el script, así
+que el calendario y los paneles siempre salen con información al día.
+
+
+CONEXION A LA BASE
+
+Está en Model\UtilitarioModel.php, en la función OpenDB().
+
+   Base: medisalud_cr
+   Servidor: 127.0.0.1:3307
+   Usuario: root, sin contraseña
+
+
+USUARIOS DE PRUEBA
+
+Se entra con la cédula, no con el correo.
+
+   Administrador   101110111   Admin123*      Administrador del Sistema
+   Médico          202220222   Medico123*     Dra. Laura García Mora
+   Paciente        505550555   Paciente123*   Ana Mora Jiménez
+
+En DataBase.sql hay más médicos y otro paciente, con la misma contraseña según
+el rol. También se puede crear una cuenta desde Registrarse: al escribir la
+cédula el nombre se trae solo de un servicio del Registro Civil, y si ese
+servicio no responde el campo se desbloquea para escribirlo a mano.
+
+
+CORREOS
+
+El sistema manda el comprobante de la cita y la contraseña temporal con
+PHPMailer por Gmail. La cuenta y la clave están en Controller\ConfigCorreo.php
+y Controller\clave_correo.txt. Si la red bloquea la salida a Gmail el correo no
+se manda, pero la cita se guarda igual.
+
+
+QUE VIENE EN LA ENTREGA
+
+   MediSalud-CR\                        el código y DataBase.sql
+   ProyectoFinal_MediSalud.docx y .pdf  documentación IEEE
+   MediSaludCasosDeUso.xlsx y .pdf      Anexo A, casos de uso
+   MediSalud_DiagramaER_Final.drawio    Anexo B, diagrama entidad-relación
+   MediSalud_DiagramaER_Final.pdf y     el mismo diagrama en imagen, para verlo
+   MediSalud_DiagramaER_Final.png       sin instalar draw.io

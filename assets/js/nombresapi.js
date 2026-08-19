@@ -1,9 +1,5 @@
-// consulta el nombre en el api de cedulas y lo precarga en el formulario
-// la usan el registro y la pantalla de mi perfil, para no repetir la funcion
-//
-// el campo nombre arranca bloqueado para que lo llene el api,
-// pero si el api no responde (sin internet o servicio caido) se desbloquea
-// para que la persona lo pueda escribir a mano y el registro no se trabe
+// trae el nombre del api de cedulas y lo pone en el formulario
+// la usan el registro y mi perfil
 
 function BloquearNombre() {
     $("#nombre").prop("readonly", true);
@@ -56,9 +52,7 @@ $(function () {
         "</small>"
     );
 
-    // en el registro el campo llega vacio: se bloquea para que lo llene el api.
-    // en mi perfil ya viene con el nombre guardado, ahi se deja editable para
-    // que la persona pueda corregirlo sin tener que borrar y escribir la cedula
+    // en el registro llega vacio y lo llena el api, en mi perfil ya viene con dato
     if ($("#nombre").val() == "") {
         BloquearNombre();
     }

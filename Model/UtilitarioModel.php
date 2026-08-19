@@ -1,8 +1,7 @@
 <?php
 
     // conexion a la base, si cambia el puerto solo se toca aqui
-    // el juego de caracteres se fija explicitamente para que las tildes
-    // y las enes viajen bien entre la base y las pantallas
+    // el utf8mb4 es para que las tildes y las enes se vean bien
     function OpenDB()
     {
         mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
