@@ -15,7 +15,7 @@ PintarHeader();
     <!-- banner principal -->
     <div class="slider-area position-relative">
         <div class="slider-active">
-            <div class="single-slider slider-height d-flex align-items-center" style="background-image:url(../../assets/img/hero/h1_hero.png); background-size:cover; background-position:center;">
+            <div class="single-slider slider-height d-flex align-items-center" style="background-image:url(../../assets/img/hero/h1_hero.png); background-size:cover; background-position:center top;">
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-7 col-lg-9 col-md-10">
